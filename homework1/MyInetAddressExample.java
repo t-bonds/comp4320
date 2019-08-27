@@ -1,7 +1,7 @@
 import java.net.*;  // for InetAddress
 import java.util.Scanner; // for User Input
 
-public class InetAddressExample {
+public class MyInetAddressExample {
 
   public static void main(String[] args) {
 
@@ -15,18 +15,49 @@ public class InetAddressExample {
       System.out.println("Unable to determine this host's address");
     }
 
-    for (int i = 0; i < args.length; i++) {
-      // Get name(s)/address(es) of hosts given on command-line
-      try {
-        InetAddress[] addressList = InetAddress.getAllByName(args[i]);
-        System.out.println(args[i] + ":");
-        // Print the first name.  Assume array contains at least one entry.
-        System.out.println("\t" + addressList[0].getHostName());
-        for (int j = 0; j < addressList.length; j++)
-          System.out.println("\t" + addressList[j].getHostAddress());
-      } catch (UnknownHostException e) {
-        System.out.println("Unable to find address for " + args[i]);
+
+      // Get name(s)/address(es) of hosts given on user input
+
+        Scanner scan = new Scanner(System.in);
+        System.out.print("\nPlease Enter A Hostname: ");
+        String firstAddress = scan.next();
+
+        try {
+
+        InetAddress address1 = InetAddress.getByName(firstAddress);
+        System.out.println(firstAddress + ":");
+        // Print the first name.
+        System.out.println("\t" + address1.getHostName());
+
+        String hostAddressString = address1.getHostAddress();
+        String[] hostAddressStringArray = hostAddressString.split("\\.");
+
+        System.out.print("\tBinary Format: ");
+
+        for (String string : hostAddressStringArray) {
+        int hostAddress = Integer.parseInt(string);
+        String binary = Integer.toBinaryString(hostAddress);
+        System.out.print(binary);
+        }
+
+        System.out.print("\n\tBinary Dotted-Quad Format: ");
+
+        for (String string : hostAddressStringArray) {
+        int hostAddress = Integer.parseInt(string);
+        String binary = Integer.toBinaryString(hostAddress);
+        System.out.print(binary + ".");
       }
-    }
-  }
+
+        System.out.print("\n");
+
+        System.out.println("\tDecimal Dotted-Quad Format: " + hostAddressString);
+
+
+      }
+      catch (UnknownHostException e) {
+        System.out.println("Unable to find address for " + firstAddress);
+      }
+
+
+}
 }
