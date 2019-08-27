@@ -1,7 +1,7 @@
 import java.net.*;  // for Socket
 import java.io.*;   // for IOException and Input/OutputStream
 
-public class TCPEchoClient {
+public class myFirstTCPClient {
 
   public static void main(String[] args) throws IOException {
 
@@ -27,7 +27,7 @@ public class TCPEchoClient {
     int totalBytesRcvd = 0;  // Total bytes received so far
     int bytesRcvd;           // Bytes received in last read
     while (totalBytesRcvd < byteBuffer.length) {
-      if ((bytesRcvd = in.read(byteBuffer, totalBytesRcvd,  
+      if ((bytesRcvd = in.read(byteBuffer, totalBytesRcvd,
                         byteBuffer.length - totalBytesRcvd)) == -1)
         throw new SocketException("Connection close prematurely");
       totalBytesRcvd += bytesRcvd;

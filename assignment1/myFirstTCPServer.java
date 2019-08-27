@@ -1,7 +1,7 @@
 import java.net.*;  // for Socket, ServerSocket, and InetAddress
 import java.io.*;   // for IOException and Input/OutputStream
 
-public class TCPEchoServer {
+public class myFirstTCPServer {
 
   private static final int BUFSIZE = 32;   // Size of receive buffer
 
