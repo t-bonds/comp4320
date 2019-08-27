@@ -1,6 +1,7 @@
 import java.net.*;  // for InetAddress
+import java.util.Scanner; // for User Input
 
-public class MyInetAddressExample {
+public class InetAddressExample {
 
   public static void main(String[] args) {
 
