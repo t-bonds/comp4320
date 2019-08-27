@@ -41,11 +41,17 @@ public class MyInetAddressExample {
         }
 
         System.out.print("\n\tBinary Dotted-Quad Format: ");
-
+        int i = 0;
         for (String string : hostAddressStringArray) {
         int hostAddress = Integer.parseInt(string);
         String binary = Integer.toBinaryString(hostAddress);
+        i++;
+        if (i < 4) {
         System.out.print(binary + ".");
+      }
+      else {
+        System.out.print(binary);
+      }
       }
 
         System.out.print("\n");
