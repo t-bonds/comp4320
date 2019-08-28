@@ -1,3 +1,6 @@
+//Tanner Bonds
+//Andrew Yarbrough
+
 import java.net.*;  // for InetAddress
 import java.util.Scanner; // for User Input
 
