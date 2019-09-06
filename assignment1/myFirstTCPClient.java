@@ -15,10 +15,14 @@ public static void main(String[] args) throws IOException {
 
         int servPort = (args.length == 2) ? Integer.parseInt(args[1]) : 7;
 
+        //TODO CREATE FOR LOOP
+        //TODO REMOVE PRINT STATEMENT INSIDE IF STATEMENT
+
+
         System.out.print("Please enter a message shorter than 128 characters: ");
         Scanner scan = new Scanner(System.in);
         String firstAddress = scan.next();
-        if (firstAddress.length() <=128) {
+        if (firstAddress.length() <= 128) {
                 System.out.println("Your message is: "+ firstAddress);
         }
         else {
@@ -38,6 +42,11 @@ public static void main(String[] args) throws IOException {
         // Receive the same string back from the server
         int totalBytesRcvd = 0; // Total bytes received so far
         int bytesRcvd;     // Bytes received in last read
+
+        //TODO MEASURE DURATION BETWEEN WHEN MESSAGE WAS SENT AND RECEIVED
+        //TODO PRINT TIME MESSAGE RECEIVED
+        //TODO COLLECT ROUND TRIP TIME
+
         while (totalBytesRcvd < firstAddress.getBytes().length) {
                 if ((bytesRcvd = in.read(firstAddress.getBytes(), totalBytesRcvd,
                                          firstAddress.getBytes().length - totalBytesRcvd)) == -1)
