@@ -21,7 +21,7 @@ public static void main(String[] args) throws IOException {
 
         System.out.print("Please enter a message shorter than 128 characters: ");
         Scanner scan = new Scanner(System.in);
-        String firstAddress = scan.next();
+        String firstAddress = scan.nextLine();
         if (firstAddress.length() <= 128) {
                 System.out.println("Your message is: "+ firstAddress);
         }
