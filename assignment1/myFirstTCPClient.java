@@ -20,12 +20,13 @@ public static void main(String[] args) throws IOException {
                 System.out.print("Please enter a message shorter than 128 characters: ");
                 Scanner scan = new Scanner(System.in);
                 String firstAddress = scan.nextLine(); //nextLine allows for spaces inside the string
-                if (firstAddress.length() <= 128) {
-                        System.out.println("Your message is: "+ firstAddress);
-                }
-                else {
+                if (firstAddress.length() > 128) {
                         throw new IllegalArgumentException("Your message must be shorter than 128 characters.");
                 }
+                if (firstAddress == "exit") {
+                  break;
+                }
+
 
 
                 // Create socket that is connected to server on specified port
