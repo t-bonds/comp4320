@@ -1,7 +1,7 @@
 import java.net.*;  // for Socket
 import java.io.*;   // for IOException and Input/OutputStream
 import java.util.Scanner; // for Scanner
-import java.time.*;
+
 
 public class myFirstTCPClient {
 
@@ -36,6 +36,7 @@ public static void main(String[] args) throws IOException {
                 OutputStream out = socket.getOutputStream();
 
                 out.write(firstAddress.getBytes()); // Send the encoded string to the server
+                long start = System.nanoTime();
 
                 // Receive the same string back from the server
                 int totalBytesRcvd = 0; // Total bytes received so far
@@ -51,9 +52,11 @@ public static void main(String[] args) throws IOException {
                                 throw new SocketException("Connection close prematurely");
                         totalBytesRcvd += bytesRcvd;
                 }
+                long finish = System.nanoTime();
+                long elapsed = finish - start;
 
                 System.out.println("Client Received: " + new String(firstAddress.getBytes()));
-                System.out.println("Time Elasped: " + "" + "ns"); // Dr. Biaz on canvas stated nanoseconds was acceptable
+                System.out.println("Time Elapsed: " + elapsed/(1000000.0) + "ms");
 
                 socket.close(); // Close the socket and its streams
         }
