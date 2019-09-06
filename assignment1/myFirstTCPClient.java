@@ -13,8 +13,7 @@ public static void main(String[] args) throws IOException {
         String server = args[0]; // Server name or IP address
         int servPort = (args.length == 2) ? Integer.parseInt(args[1]) : 7;
 
-        //TODO ALLOW EXCEPTION TO EXIT IN THE LOOP
-        //TODO REMOVE PRINT STATEMENT INSIDE IF STATEMENT
+
 
         for (;;) {
 
@@ -42,9 +41,7 @@ public static void main(String[] args) throws IOException {
                 int totalBytesRcvd = 0; // Total bytes received so far
                 int bytesRcvd; // Bytes received in last read
 
-                //TODO MEASURE DURATION BETWEEN WHEN MESSAGE WAS SENT AND RECEIVED
-                //TODO PRINT TIME MESSAGE RECEIVED
-                //TODO COLLECT ROUND TRIP TIME
+                
 
                 while (totalBytesRcvd < firstAddress.getBytes().length) {
                         if ((bytesRcvd = in.read(firstAddress.getBytes(), totalBytesRcvd,
