@@ -1,6 +1,7 @@
 import java.net.*;  // for Socket, ServerSocket, and InetAddress
 import java.io.*;   // for IOException and Input/OutputStream
-import java.lang.StringBuffer; // for StringBuffer
+import java.lang.Object; //for Byte Reversal
+
 
 public class myFirstTCPServer {
 
@@ -22,6 +23,8 @@ public class myFirstTCPServer {
 
       byte[] byteBuffer = new byte[BUFSIZE]; // Receive buffer
 
+
+
       for (;;) { // Run forever, accepting and servicing connections
          Socket clntSock = servSock.accept(); // Get client connection
 
@@ -31,6 +34,7 @@ public class myFirstTCPServer {
 
          InputStream in = clntSock.getInputStream();
          OutputStream out = clntSock.getOutputStream();
+
 
                 // Receive until client closes connection, indicated by -1 return
          while ((recvMsgSize = in.read(byteBuffer)) != -1)
