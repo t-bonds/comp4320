@@ -10,14 +10,12 @@ public static void main(String[] args) throws IOException {
                 throw new IllegalArgumentException("Parameter(s): <Server> <Word> [<Port>]");
 
         String server = args[0]; // Server name or IP address
-
-
-
         int servPort = (args.length == 2) ? Integer.parseInt(args[1]) : 7;
 
-        //TODO CREATE FOR LOOP
+        //TODO ALLOW EXCEPTION TO EXIT IN THE LOOP
         //TODO REMOVE PRINT STATEMENT INSIDE IF STATEMENT
 
+        for (;;) {
 
         System.out.print("Please enter a message shorter than 128 characters: ");
         Scanner scan = new Scanner(System.in);
@@ -57,5 +55,6 @@ public static void main(String[] args) throws IOException {
         System.out.println("Received: " + new String(firstAddress.getBytes()));
 
         socket.close(); // Close the socket and its streams
+      }
 }
 }
