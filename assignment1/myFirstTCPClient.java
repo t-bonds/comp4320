@@ -1,6 +1,7 @@
 import java.net.*;  // for Socket
 import java.io.*;   // for IOException and Input/OutputStream
 import java.util.Scanner; // for Scanner
+import java.time.*;
 
 public class myFirstTCPClient {
 
@@ -51,7 +52,8 @@ public static void main(String[] args) throws IOException {
                         totalBytesRcvd += bytesRcvd;
                 }
 
-                System.out.println("Received: " + new String(firstAddress.getBytes()));
+                System.out.println("Client Received: " + new String(firstAddress.getBytes()));
+                System.out.println("Time Elasped: " + "" + "ns"); // Dr. Biaz on canvas stated nanoseconds was acceptable
 
                 socket.close(); // Close the socket and its streams
         }
