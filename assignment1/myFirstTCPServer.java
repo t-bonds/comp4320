@@ -18,17 +18,16 @@ public class myFirstTCPServer {
         // Create a server socket to accept client connection requests
       ServerSocket servSock = new ServerSocket(servPort);
 
-      int recvMsgSize; // Size of received message
 
-
-
-      byte[] byteBuffer = new byte[BUFSIZE]; // Receive buffer
 
 
 
 
       for (;;) { // Run forever, accepting and servicing connections
          Socket clntSock = servSock.accept(); // Get client connection
+
+         int recvMsgSize; // Size of received message
+         byte[] byteBuffer = new byte[BUFSIZE]; // Receive buffer
 
          System.out.println("Handling client at " +
                                    clntSock.getInetAddress().getHostAddress() + " on port " +
