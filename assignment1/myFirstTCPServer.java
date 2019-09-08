@@ -6,7 +6,7 @@ import java.io.*;   // for IOException and Input/OutputStream
 
 public class myFirstTCPServer {
 
-   private static final int BUFSIZE = 32;     // Size of receive buffer
+   private static final int BUFSIZE = 128;     // Size of receive buffer
 
    public static void main(String[] args) throws IOException {
 
@@ -20,9 +20,10 @@ public class myFirstTCPServer {
 
       int recvMsgSize; // Size of received message
 
-      //TODO REMOVE BYTE BUFFER??
+
 
       byte[] byteBuffer = new byte[BUFSIZE]; // Receive buffer
+
 
 
 
@@ -36,10 +37,17 @@ public class myFirstTCPServer {
          InputStream in = clntSock.getInputStream();
          OutputStream out = clntSock.getOutputStream();
 
-
+         String rcdMessage = "";
+         String rvdMessage = "";
                 // Receive until client closes connection, indicated by -1 return
-         while ((recvMsgSize = in.read(byteBuffer)) != -1)
-            out.write(byteBuffer, 0, recvMsgSize);
+         while ((recvMsgSize = in.read(byteBuffer)) != -1) {
+            rcdMessage = new String(byteBuffer);
+            rvdMessage = new StringBuilder(rcdMessage.trim()).reverse().toString();
+            byteBuffer = rvdMessage.getBytes();
+            out.write(byteBuffer);
+          }
+          System.out.println("Received Message: " + rcdMessage);
+          System.out.println("Reversed Message: " + rvdMessage);
 
          clntSock.close(); // Close the socket.  We are done with this client!
       }

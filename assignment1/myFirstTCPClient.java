@@ -26,7 +26,8 @@ public static void main(String[] args) throws IOException {
                 if (firstAddress.equals("exit") ) {
                         break;
                 }
-
+                byte[] byteBuffer = firstAddress.getBytes();
+                
                 // Create socket that is connected to server on specified port
                 Socket socket = new Socket(server, servPort);
                 System.out.println("Connected to server...sending echo string");
@@ -34,17 +35,17 @@ public static void main(String[] args) throws IOException {
                 InputStream in = socket.getInputStream();
                 OutputStream out = socket.getOutputStream();
 
-                out.write(firstAddress.getBytes()); // Send the encoded string to the server
+                out.write(byteBuffer); // Send the encoded string to the server
                 long start = System.nanoTime();
 
                 // Receive the same string back from the server
                 int totalBytesRcvd = 0; // Total bytes received so far
                 int bytesRcvd; // Bytes received in last read
 
-                
+
 
                 while (totalBytesRcvd < firstAddress.getBytes().length) {
-                        if ((bytesRcvd = in.read(firstAddress.getBytes(), totalBytesRcvd,
+                        if ((bytesRcvd = in.read(byteBuffer, totalBytesRcvd,
                                                  firstAddress.getBytes().length - totalBytesRcvd)) == -1)
                                 throw new SocketException("Connection close prematurely");
                         totalBytesRcvd += bytesRcvd;
@@ -52,7 +53,7 @@ public static void main(String[] args) throws IOException {
                 long finish = System.nanoTime();
                 long elapsed = finish - start;
 
-                System.out.println("Client Received: " + new String(firstAddress.getBytes()));
+                System.out.println("Client Received: " + new String(byteBuffer));
                 System.out.println("Time Elapsed: " + elapsed/(1000000.0) + "ms");
 
                 socket.close(); // Close the socket and its streams
