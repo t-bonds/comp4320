@@ -19,8 +19,17 @@ public static void main(String[] args) throws IOException {
                 socket.receive(packet); // Receive packet from client
                 System.out.println("Handling client at " +
                                    packet.getAddress().getHostAddress() + " on port " + packet.getPort());
+
+                                   String rcdMessage = new String(packet.getData());
+                                   String rvdMessage = new StringBuilder(rcdMessage.trim()).reverse().toString();
+                                   System.out.println("Received Message: " + rcdMessage);
+                                   System.out.println("Reversed Message: " + rvdMessage);
+                                   packet.setData(rvdMessage.getBytes());
+
+
                 socket.send(packet); // Send the same packet back to client
-                packet.setLength(ECHOMAX); // Reset length to avoid shrinking buffer
+                //TODO FIX PACKET LENGTH
+                packet.setLength(rcdMessage.length()); // Reset length to avoid shrinking buffer
         }
         /* NOT REACHED */
 }

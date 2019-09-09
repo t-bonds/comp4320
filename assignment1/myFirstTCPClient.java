@@ -8,7 +8,7 @@ public class myFirstTCPClient {
 public static void main(String[] args) throws IOException {
 
         if ((args.length < 1) || (args.length > 2)) // Test for correct # of args
-                throw new IllegalArgumentException("Parameter(s): <Server> <Word> [<Port>]");
+                throw new IllegalArgumentException("Parameter(s): <Server> [<Port>]");
 
         String server = args[0]; // Server name or IP address
         int servPort = (args.length == 2) ? Integer.parseInt(args[1]) : 7;
@@ -27,7 +27,7 @@ public static void main(String[] args) throws IOException {
                         break;
                 }
                 byte[] byteBuffer = firstAddress.getBytes();
-                
+
                 // Create socket that is connected to server on specified port
                 Socket socket = new Socket(server, servPort);
                 System.out.println("Connected to server...sending echo string");
