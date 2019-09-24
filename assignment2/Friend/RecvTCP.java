@@ -3,24 +3,24 @@ import java.net.*;  // for Socket and ServerSocket
 
 public class RecvTCP {
 
-  public static void main(String args[]) throws Exception {
+public static void main(String args[]) throws Exception {
 
-    if (args.length != 1)  // Test for correct # of args
-      throw new IllegalArgumentException("Parameter(s): <Port>");
+        if (args.length != 1) // Test for correct # of args
+                throw new IllegalArgumentException("Parameter(s): <Port>");
 
-    int port = Integer.parseInt(args[0]);   // Receiving Port
-	
-    ServerSocket servSock = new ServerSocket(port);
-    Socket clntSock = servSock.accept();
+        int port = Integer.parseInt(args[0]); // Receiving Port
 
-    // Receive binary-encoded friend
-    FriendDecoder decoder = new FriendDecoderBin();
-    Friend receivedFriend = decoder.decode(clntSock.getInputStream());
+        ServerSocket servSock = new ServerSocket(port);
+        Socket clntSock = servSock.accept();
 
-    System.out.println("Received Binary-Encoded Friend");
-    System.out.println(receivedFriend);
+        // Receive binary-encoded friend
+        FriendDecoder decoder = new FriendDecoderBin();
+        Friend receivedFriend = decoder.decode(clntSock.getInputStream());
 
-    clntSock.close();
-    servSock.close();
-  }
+        System.out.println("Received Binary-Encoded Friend");
+        System.out.println(receivedFriend);
+
+        clntSock.close();
+        servSock.close();
+}
 }
