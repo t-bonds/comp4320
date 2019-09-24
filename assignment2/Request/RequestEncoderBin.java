@@ -1,37 +1,37 @@
 import java.io.*;  // for ByteArrayOutputStream and DataOutputStream
 
-public class FriendEncoderBin implements FriendEncoder, FriendBinConst {
+public class RequestEncoderBin implements RequestEncoder, RequestBinConst {
 
 private String encoding;    // Character encoding
 
-public FriendEncoderBin() {
+public RequestEncoderBin() {
         encoding = DEFAULT_ENCODING;
 }
 
-public FriendEncoderBin(String encoding) {
+public RequestEncoderBin(String encoding) {
         this.encoding = encoding;
 }
 
-public byte[] encode(Friend friend) throws Exception {
+public byte[] encode(Request request) throws Exception {
 
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(buf);
-        out.writeLong(friend.ID);
+        out.writeLong(request.ID);
         // Will deal with the lasname at the end
-        out.writeShort(friend.streetNumber);
-        out.writeInt(friend.zipCode);
+        out.writeShort(request.streetNumber);
+        out.writeInt(request.zipCode);
         byte flags = 0;
-        if (friend.single)
+        if (request.single)
                 flags = SINGLE_FLAG;
-        if (friend.rich)
+        if (request.rich)
                 flags |= RICH_FLAG;
-        if (friend.female)
+        if (request.female)
                 flags |= FEMALE_FLAG;
         out.writeByte(flags);
 
-        byte[] encodedLastname = friend.lastName.getBytes(encoding);
+        byte[] encodedLastname = request.lastName.getBytes(encoding);
         if (encodedLastname.length > MAX_LASTNAME_LEN)
-                throw new IOException("Friend lastname exceeds encoded length limit");
+                throw new IOException("Request lastname exceeds encoded length limit");
         out.writeByte(encodedLastname.length); // provides length of lastname
         out.write(encodedLastname);
         out.flush();

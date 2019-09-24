@@ -13,18 +13,18 @@ public static void main(String args[]) throws Exception {
 
         Socket sock = new Socket(destAddr, destPort);
 
-        Friend friend = new Friend(1234567890987654L, "John Smith",
+        Request request = new Request(1234567890987654L, "John Smith",
                                    (short) 2360, 36830, false, true, false);
 
-        System.out.println("Display friend");
-        System.out.println(friend); // Display friend just to check what we send
+        System.out.println("Display request");
+        System.out.println(request); // Display request just to check what we send
 
 
-        FriendEncoder encoder = new FriendEncoderBin();
+        RequestEncoder encoder = new RequestEncoderBin();
 
-        System.out.println("Sending Friend (Binary)");
+        System.out.println("Sending Request (Binary)");
         OutputStream out = sock.getOutputStream(); // Get a handle onto Output Stream
-        out.write(encoder.encode(friend)); // Encode and send
+        out.write(encoder.encode(request)); // Encode and send
 
         sock.close();
 

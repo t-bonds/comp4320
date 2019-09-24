@@ -1,4 +1,4 @@
-public interface FriendBinConst {
+public interface RequestBinConst {
 public static final String DEFAULT_ENCODING = "ISO-8859-1";
 public static final int SINGLE_FLAG = 1 << 0;     // Least significant bit
 public static final int RICH_FLAG   = 1 << 1;     // weight 2^1

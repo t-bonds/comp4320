@@ -1,4 +1,4 @@
-public class Friend {
+public class Request {
 
 public long ID;                // Item identification number
 public String lastName;        // Lastname
@@ -9,7 +9,7 @@ public boolean rich;           // Rich ?
 public boolean female;         // Female ?
 
 
-public Friend(long ID, String lastname, short streetnumber,
+public Request(long ID, String lastname, short streetnumber,
               int zipcode, boolean single, boolean rich, boolean female)  {
         this.ID           = ID;
         this.lastName     = lastname;
@@ -22,7 +22,7 @@ public Friend(long ID, String lastname, short streetnumber,
 
 public String toString() {
         final String EOLN = java.lang.System.getProperty("line.separator");
-        String value = "Friend # = " + ID + EOLN +
+        String value = "Request # = " + ID + EOLN +
                        "Lastname = " + lastName + EOLN +
                        "Street#  = " + streetNumber + EOLN +
                        "Zip Code = " + zipCode + EOLN;

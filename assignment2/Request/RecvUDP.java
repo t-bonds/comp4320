@@ -14,17 +14,17 @@ public static void main(String[] args) throws Exception {
         DatagramPacket packet = new DatagramPacket(new byte[1024],1024);
         sock.receive(packet);
 
-        // Receive binary-encoded friend
-        // FriendDecoder decoder = new FriendDecoderBin();
-        FriendDecoder decoder = (args.length == 2 ? // Which encoding
-                                 new FriendDecoderBin(args[1]) :
-                                 new FriendDecoderBin() );
+        // Receive binary-encoded request
+        // RequestDecoder decoder = new RequestDecoderBin();
+        RequestDecoder decoder = (args.length == 2 ? // Which encoding
+                                 new RequestDecoderBin(args[1]) :
+                                 new RequestDecoderBin() );
 
 
-        Friend receivedFriend = decoder.decode(packet);
+        Request receivedRequest = decoder.decode(packet);
 
-        System.out.println("Received Binary-Encoded Friend");
-        System.out.println(receivedFriend);
+        System.out.println("Received Binary-Encoded Request");
+        System.out.println(receivedRequest);
 
         sock.close();
 }

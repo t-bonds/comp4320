@@ -1,19 +1,19 @@
 import java.io.*;  // for ByteArrayInputStream
 import java.net.*; // for DatagramPacket
 
-public class FriendDecoderBin implements FriendDecoder, FriendBinConst {
+public class RequestDecoderBin implements RequestDecoder, RequestBinConst {
 
 private String encoding;    // Character encoding
 
-public FriendDecoderBin() {
+public RequestDecoderBin() {
         encoding = DEFAULT_ENCODING;
 }
 
-public FriendDecoderBin(String encoding) {
+public RequestDecoderBin(String encoding) {
         this.encoding = encoding;
 }
 
-public Friend decode(InputStream wire) throws IOException {
+public Request decode(InputStream wire) throws IOException {
         boolean single, rich, female;
         DataInputStream src = new DataInputStream(wire);
         long ID            = src.readLong();
@@ -29,13 +29,13 @@ public Friend decode(InputStream wire) throws IOException {
         src.readFully(stringBuf);
         String lastname = new String(stringBuf, encoding);
 
-        return new Friend(ID,lastname, streetnumber, zipcode,
+        return new Request(ID,lastname, streetnumber, zipcode,
                           ((flags & SINGLE_FLAG) == SINGLE_FLAG),
                           ((flags & RICH_FLAG) == RICH_FLAG),
                           ((flags & FEMALE_FLAG) == FEMALE_FLAG));
 }
 
-public Friend decode(DatagramPacket p) throws IOException {
+public Request decode(DatagramPacket p) throws IOException {
         ByteArrayInputStream payload =
                 new ByteArrayInputStream(p.getData(), p.getOffset(), p.getLength());
         return decode(payload);

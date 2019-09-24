@@ -13,12 +13,12 @@ public static void main(String args[]) throws Exception {
         ServerSocket servSock = new ServerSocket(port);
         Socket clntSock = servSock.accept();
 
-        // Receive binary-encoded friend
-        FriendDecoder decoder = new FriendDecoderBin();
-        Friend receivedFriend = decoder.decode(clntSock.getInputStream());
+        // Receive binary-encoded request
+        RequestDecoder decoder = new RequestDecoderBin();
+        Request receivedRequest = decoder.decode(clntSock.getInputStream());
 
-        System.out.println("Received Binary-Encoded Friend");
-        System.out.println(receivedFriend);
+        System.out.println("Received Binary-Encoded Request");
+        System.out.println(receivedRequest);
 
         clntSock.close();
         servSock.close();
