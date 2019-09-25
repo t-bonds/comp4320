@@ -1,8 +1,8 @@
 import java.net.*;  // for DatagramSocket and DatagramPacket
 import java.io.*;   // for IOException
 
-public class RecvUDP {
-
+public class ServerUDP {
+  private static final int GID = 24;
 public static void main(String[] args) throws Exception {
 
         if (args.length != 1 && args.length != 2) // Test for correct # of args

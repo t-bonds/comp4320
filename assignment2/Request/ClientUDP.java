@@ -1,7 +1,7 @@
 import java.net.*;  // for DatagramSocket, DatagramPacket, and InetAddress
 import java.io.*;   // for IOException
 
-public class SendUDP {
+public class ClientUDP {
 
 public static void main(String args[]) throws Exception {
 
