@@ -22,14 +22,7 @@ public Request decode(InputStream wire) throws IOException {
         int op1             = src.readInt();
         int op2             = src.readInt();
 
-        //TODO DETERMINE IF NECESSARY
-        //Deal with the lastname
-        // int stringLength = src.read(); // Returns an unsigned byte as an int
-        // if (stringLength == -1)
-        //         throw new EOFException();
-        // byte[] stringBuf = new byte[stringLength];
-        // src.readFully(stringBuf);
-        // String lastname = new String(stringBuf, encoding);
+        
 
         return new Request(TML,ID, opCode, operands,
                           op1, op2);

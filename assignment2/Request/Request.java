@@ -6,7 +6,8 @@ public int opCode;             // Operand Code, Desired Operation
 public int operands;           // Number of Operands
 public double op1;             // Operand 1
 public double op2;             // Operand 2
-
+public int error;              // Error Code BYTE?
+public double result;          // Result Of Calculations
 
 
 
@@ -25,8 +26,8 @@ public String toString() {
         final String EOLN = java.lang.System.getProperty("line.separator");
         String value = "Total Message Length: " + TML + EOLN +
                        "Request ID: " + ID + EOLN +
-                       "Operand Code = " + opCode + EOLN +
-                       "Operand = " + operands + EOLN;
+                       "Error Code: " + error + EOLN +
+                       "Result: " + result + EOLN;
         // if (single)
         //         value += "Single" + EOLN;
         // else

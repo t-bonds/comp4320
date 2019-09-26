@@ -1,5 +1,6 @@
 import java.net.*;  // for DatagramSocket, DatagramPacket, and InetAddress
 import java.io.*;   // for IOException
+import java.util.Scanner; // for Scanner
 
 public class ClientUDP {
 
@@ -13,8 +14,34 @@ public static void main(String args[]) throws Exception {
         InetAddress destAddr = InetAddress.getByName(args[0]); // Destination address
         int destPort = Integer.parseInt(args[1]);             // Destination port
 
-        Request request = new Request(1234567890987654L, "Alice Adams",
-                                   (short) 777, 90007, true, true, false);
+        int TML, opCode, op1;
+        int operands = 1;
+        int op2 = 0;
+
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Please Enter The Following Values:");
+        System.out.print("\tOperand Type: \n\t(0 = +, 1 = -, 2 = *, 3 = /, 4 = >>, 5 = <<, 6 = ~): ");
+        opCode = Integer.parseInt(scan.nextLine());
+
+        System.out.print("\n\tOperand 1: ");
+        op1 = Integer.parseInt(scan.nextLine());
+
+        //TODO CALCULATE TML FOR ~
+        //TML
+
+        if (opCode <=5) {
+
+          System.out.print("\n\tOperand 2: ");
+          op2 = Integer.parseInt(scan.nextLine());
+          operands = 2;
+          //TODO CALCULATE TML FOR ALL OTHER OPCODE
+          //TML =
+
+        }
+        //TODO CREATE ID
+
+
+        Request request = new Request(TML, ID, opCode, operands, op1, op2);
 
         DatagramSocket sock = new DatagramSocket(); // UDP socket for sending
 
