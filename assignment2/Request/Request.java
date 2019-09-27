@@ -6,7 +6,7 @@ public int opCode;             // Operand Code, Desired Operation
 public int operands;           // Number of Operands
 public double op1;             // Operand 1
 public double op2;             // Operand 2
-public int error;              // Error Code BYTE?
+public int error = 0;              // Error Code BYTE?
 public double result;          // Result Of Calculations
 
 
@@ -21,6 +21,36 @@ public Request(int TML, int ID, int opCode,
         this.op2           = op2;
 
 }
+
+switch (opCode) {
+
+case 0:
+        result = op1 + op2;
+        break;
+case 1:
+        result = op1 - op2;
+        break;
+case 2:
+        result = op1 * op2;
+        break;
+case 3:
+        result = op1 / op2;
+        break;
+case 4:
+        //TODO SHIFT LEFT
+        break;
+case 5:
+        //TODO SHIFT RIGHT
+        break;
+case 6:
+        //TODO ONE'S COMPLEMENT
+        break;
+default:
+        error = 1;
+        break;
+}
+
+
 //TODO REWRITE WITH ERROR CODE AND RESULT
 public String toString() {
         final String EOLN = java.lang.System.getProperty("line.separator");
@@ -28,20 +58,6 @@ public String toString() {
                        "Request ID: " + ID + EOLN +
                        "Error Code: " + error + EOLN +
                        "Result: " + result + EOLN;
-        // if (single)
-        //         value += "Single" + EOLN;
-        // else
-        //         value += "Married" + EOLN;
-        //
-        // if (rich)
-        //         value += "Rich" + EOLN;
-        // else
-        //         value += "Poor" + EOLN;
-        //
-        // if (female)
-        //         value += "Female" + EOLN;
-        // else
-        //         value += "Male" + EOLN;
-         return value;
+        return value;
 }
 }

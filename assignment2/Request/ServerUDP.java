@@ -2,7 +2,7 @@ import java.net.*;  // for DatagramSocket and DatagramPacket
 import java.io.*;   // for IOException
 
 public class ServerUDP {
-  private static final int GID = 24;
+
 public static void main(String[] args) throws Exception {
 
         if (args.length != 1 && args.length != 2) // Test for correct # of args
@@ -10,7 +10,9 @@ public static void main(String[] args) throws Exception {
 
         int port = Integer.parseInt(args[0]); // Receiving Port
 
-        DatagramSocket sock = new DatagramSocket(port); // UDP socket for receiving
+        int gPort = port + RequestBinConst.GROUP_NUMBER;
+
+        DatagramSocket sock = new DatagramSocket(gPort); // UDP socket for receiving
         DatagramPacket packet = new DatagramPacket(new byte[1024],1024);
         sock.receive(packet);
 
@@ -25,6 +27,12 @@ public static void main(String[] args) throws Exception {
 
         System.out.println("Received Binary-Encoded Request");
         System.out.println(receivedRequest);
+
+
+
+
+
+
 
         sock.close();
 }

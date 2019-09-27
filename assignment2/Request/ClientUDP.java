@@ -12,7 +12,7 @@ public static void main(String args[]) throws Exception {
 
 
         InetAddress destAddr = InetAddress.getByName(args[0]); // Destination address
-        int destPort = Integer.parseInt(args[1]);             // Destination port
+        int destPort = Integer.parseInt(args[1]) + RequestBinConst.GROUP_NUMBER;             // Destination port
 
         int TML, opCode, op1;
         int operands = 1;
@@ -27,15 +27,15 @@ public static void main(String args[]) throws Exception {
         op1 = Integer.parseInt(scan.nextLine());
 
         //TODO CALCULATE TML FOR ~
-        //TML
+        //TML =
 
         if (opCode <=5) {
 
-          System.out.print("\n\tOperand 2: ");
-          op2 = Integer.parseInt(scan.nextLine());
-          operands = 2;
-          //TODO CALCULATE TML FOR ALL OTHER OPCODE
-          //TML =
+                System.out.print("\n\tOperand 2: ");
+                op2 = Integer.parseInt(scan.nextLine());
+                operands = 2;
+                //TODO CALCULATE TML FOR ALL OTHER OPCODE
+                //TML =
 
         }
         //TODO CREATE ID
@@ -48,8 +48,8 @@ public static void main(String args[]) throws Exception {
 
         // Use the encoding scheme given on the command line (args[2])
         RequestEncoder encoder = (args.length == 3 ?
-                                 new RequestEncoderBin(args[2]) :
-                                 new RequestEncoderBin());
+                                  new RequestEncoderBin(args[2]) :
+                                  new RequestEncoderBin());
 
 
         byte[] codedRequest = encoder.encode(request); // Encode request
