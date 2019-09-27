@@ -14,7 +14,7 @@ public static void main(String args[]) throws Exception {
         InetAddress destAddr = InetAddress.getByName(args[0]); // Destination address
         int destPort = Integer.parseInt(args[1]) + RequestBinConst.GROUP_NUMBER;             // Destination port
 
-        int TML, opCode, op1;
+        int opCode, op1;
         int operands = 1;
         int op2 = 0;
         for (;;) {
@@ -26,10 +26,11 @@ public static void main(String args[]) throws Exception {
                 }
                 opCode = Integer.parseInt(scan.nextLine());
 
+
                 System.out.print("\n\tOperand 1: ");
                 op1 = Integer.parseInt(scan.nextLine());
-                //TODO CONVERT MESSAGE TO BINARY
-                //TODO CALCULATE TML FOR ~
+
+
 
 
 
@@ -38,13 +39,11 @@ public static void main(String args[]) throws Exception {
                         System.out.print("\n\tOperand 2: ");
                         op2 = Integer.parseInt(scan.nextLine());
                         operands = 2;
-                        //TODO CONVERT MESSAGE TO BINARY
-                        //TODO CALCULATE TML FOR ALL OTHER OPCODE
-                        //TML =
+
 
                 }
-                //TODO CREATE RANDOM REQUEST ID
-                int id = 1;
+
+                int ID = 1;
 
 
                 Request request = new Request(TML, ID, opCode, operands, op1, op2);
@@ -63,7 +62,7 @@ public static void main(String args[]) throws Exception {
                 DatagramPacket message = new DatagramPacket(codedRequest, codedRequest.length,
                                                             destAddr, destPort);
                 sock.send(message);
-
+                ID++;
                 sock.close();
         }
 }
