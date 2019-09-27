@@ -44,6 +44,8 @@ public static void main(String args[]) throws Exception {
                 }
 
                 int ID = 1;
+                //TODO INITALIZE TML
+                int TML = 
 
 
                 Request request = new Request(TML, ID, opCode, operands, op1, op2);
