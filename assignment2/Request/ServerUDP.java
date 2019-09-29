@@ -14,6 +14,9 @@ public static void main(String[] args) throws Exception {
 
         DatagramSocket sock = new DatagramSocket(gPort); // UDP socket for receiving
         DatagramPacket packet = new DatagramPacket(new byte[1024],1024);
+
+        for (;;) {
+
         sock.receive(packet);
 
         // Receive binary-encoded request
@@ -27,13 +30,7 @@ public static void main(String[] args) throws Exception {
 
         System.out.println("Received Binary-Encoded Request");
         System.out.println(receivedRequest);
-
-
-
-
-
-
-
         sock.close();
+      }
 }
 }

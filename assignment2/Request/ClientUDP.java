@@ -1,6 +1,7 @@
 import java.net.*;  // for DatagramSocket, DatagramPacket, and InetAddress
 import java.io.*;   // for IOException
 import java.util.Scanner; // for Scanner
+import java.util.Random; // for random ID variable
 
 public class ClientUDP {
 
@@ -14,7 +15,10 @@ public static void main(String args[]) throws Exception {
         InetAddress destAddr = InetAddress.getByName(args[0]); // Destination address
         int destPort = Integer.parseInt(args[1]) + RequestBinConst.GROUP_NUMBER;             // Destination port
 
+        Random rand = new Random();
+        int TML = 0;
         int opCode, op1;
+        int ID = rand.nextInt(1000);
         int operands = 1;
         int op2 = 0;
         for (;;) {
@@ -30,23 +34,21 @@ public static void main(String args[]) throws Exception {
                 System.out.print("\n\tOperand 1: ");
                 op1 = Integer.parseInt(scan.nextLine());
 
-
-
-
-
                 if (opCode <=5) {
 
                         System.out.print("\n\tOperand 2: ");
                         op2 = Integer.parseInt(scan.nextLine());
                         operands = 2;
+                        TML = String.valueOf(ID).length() + String.valueOf(opCode).length() + String.valueOf(operands).length() + String.valueOf(op1).length() + String.valueOf(op2).length();
+                }
 
+                else if (opCode == 6) {
+
+                        TML = String.valueOf(ID).length() + String.valueOf(opCode).length() + String.valueOf(operands).length() + String.valueOf(op1).length();
 
                 }
 
-                int ID = 1;
-                //TODO INITALIZE TML
-                int TML = 
-
+                TML +=1;
 
                 Request request = new Request(TML, ID, opCode, operands, op1, op2);
 
