@@ -22,34 +22,37 @@ public Request(int TML, int ID, int opCode,
 
 }
 
-switch (opCode) {
+public double calculate(double op1, int opCode, double op2) {
 
-case 0:
-        result = op1 + op2;
-        break;
-case 1:
-        result = op1 - op2;
-        break;
-case 2:
-        result = op1 * op2;
-        break;
-case 3:
-        result = op1 / op2;
-        break;
-case 4:
-        //TODO SHIFT LEFT
-        break;
-case 5:
-        //TODO SHIFT RIGHT
-        break;
-case 6:
-        //TODO ONE'S COMPLEMENT
-        break;
-default:
-        error = 1;
-        break;
+        switch (opCode) {
+
+        case 0:
+                result = op1 + op2;
+                break;
+        case 1:
+                result = op1 - op2;
+                break;
+        case 2:
+                result = op1 * op2;
+                break;
+        case 3:
+                result = op1 / op2;
+                break;
+        case 4:
+                //TODO SHIFT LEFT
+                break;
+        case 5:
+                //TODO SHIFT RIGHT
+                break;
+        case 6:
+                //TODO ONE'S COMPLEMENT
+                break;
+        default:
+                error = 1;
+                break;
+        }
+        return result;
 }
-
 
 //TODO REWRITE WITH ERROR CODE AND RESULT
 public String toString() {
@@ -57,7 +60,7 @@ public String toString() {
         String value = "Total Message Length: " + TML + EOLN +
                        "Request ID: " + ID + EOLN +
                        "Error Code: " + error + EOLN +
-                       "Result: " + result + EOLN;
+                       "Result: " + calculate(op1, opCode, op2) + EOLN;
         return value;
 }
 }

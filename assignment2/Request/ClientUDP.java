@@ -68,6 +68,8 @@ public static void main(String args[]) throws Exception {
                 sock.send(message);
                 ID++;
                 sock.close();
+
+                //TODO RECEIVE AND PRINT RETURNED MESSAGE FROM ServerUDP
         }
 }
 }
