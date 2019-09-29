@@ -33,7 +33,7 @@ public static void main(String args[]) throws Exception {
 
                 System.out.print("\n\tOperand 1: ");
                 op1 = Integer.parseInt(scan.nextLine());
-
+                //TODO REDO TML CALCULATION
                 if (opCode <=5) {
 
                         System.out.print("\n\tOperand 2: ");

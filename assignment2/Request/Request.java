@@ -39,13 +39,13 @@ public double calculate(double op1, int opCode, double op2) {
                 result = op1 / op2;
                 break;
         case 4:
-                //TODO SHIFT LEFT
+                result = ((int) op1 >> (int) op2);
                 break;
         case 5:
-                //TODO SHIFT RIGHT
+                result = ((int) op1 << (int) op2);
                 break;
         case 6:
-                //TODO ONE'S COMPLEMENT
+                result = ~((int) op1);
                 break;
         default:
                 error = 1;
@@ -54,7 +54,7 @@ public double calculate(double op1, int opCode, double op2) {
         return result;
 }
 
-//TODO REWRITE WITH ERROR CODE AND RESULT
+
 public String toString() {
         final String EOLN = java.lang.System.getProperty("line.separator");
         String value = "Total Message Length: " + TML + EOLN +
