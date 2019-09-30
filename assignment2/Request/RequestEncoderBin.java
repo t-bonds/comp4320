@@ -13,7 +13,7 @@ public class RequestEncoderBin implements RequestEncoder, RequestBinConst {
    }
 
    public byte[] encode(Request request) throws Exception {
-   
+
       ByteArrayOutputStream buf = new ByteArrayOutputStream();
       DataOutputStream out = new DataOutputStream(buf);
       out.writeInt(request.TML);
@@ -22,6 +22,7 @@ public class RequestEncoderBin implements RequestEncoder, RequestBinConst {
       out.writeInt(request.operands);
       out.writeDouble(request.op1);
       out.writeDouble(request.op2);
+      out.writeDouble(request.result);
       out.flush();
       return buf.toByteArray();
    }
