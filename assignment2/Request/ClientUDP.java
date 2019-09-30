@@ -70,9 +70,19 @@ public class ClientUDP {
                                                             destAddr, destPort);
          sock.send(message);
          ID++;
-         sock.close();
 
-                //TODO RECEIVE AND PRINT RETURNED MESSAGE FROM ServerUDP
+         sock.receive(message);
+
+         RequestDecoder decoder = (args.length == 2 ? // Which encoding
+                                   new RequestDecoderBin(args[1]) :
+                                   new RequestDecoderBin() );
+
+
+         Request receivedRequest = decoder.decode(message);
+
+         System.out.println("\n" + receivedRequest);
+
       }
+      //sock.close();
    }
 }

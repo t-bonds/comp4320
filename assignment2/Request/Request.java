@@ -19,13 +19,13 @@ public class Request {
       this.operands      = operands;
       this.op1           = op1;
       this.op2           = op2;
-   
+
    }
 
    public double calculate(double op1, int opCode, double op2) {
-   
+
       switch (opCode) {
-      
+      //TODO determine calculation errors
          case 0:
             result = op1 + op2;
             break;

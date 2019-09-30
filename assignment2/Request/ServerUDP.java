@@ -34,9 +34,17 @@ public static void main(String[] args) throws Exception {
 
                 Request receivedRequest = decoder.decode(packet);
 
-                System.out.println("Received Binary-Encoded Request");
+                System.out.println("Received Binary-Encoded Request: ");
                 System.out.println(receivedRequest);
-                //sock.send(receivedRequest.toString());
+
+                RequestEncoder encoder = (args.length == 2 ? // Which encoding
+                                          new RequestEncoderBin(args[1]) :
+                                          new RequestEncoderBin() );
+
+                byte[] sendRequest = encoder.encode(receivedRequest);
+                packet.setData(sendRequest);
+                sock.send(packet);
+                packet.setLength(sendRequest.length);
         }
 }
 //sock.close();
