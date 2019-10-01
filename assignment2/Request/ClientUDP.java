@@ -41,14 +41,9 @@ public static void main(String args[]) throws Exception {
                         System.out.print("\n\tOperand 2: ");
                         op2 = Integer.parseInt(scan.nextLine());
                         operands = 2;
-                        //TML = String.valueOf((byte) ID).length() + String.valueOf((byte)opCode).length() + String.valueOf((byte)operands).length() + String.valueOf((byte) op1).length() + String.valueOf((byte) op2).length();
+                        
                 }
 
-                // else if (opCode == 6) {
-                //
-                //         //TML = String.valueOf((byte) ID).length() + String.valueOf((byte) opCode).length() + String.valueOf((byte) operands).length() + String.valueOf((byte) op1).length();
-                //
-                // }
                 Request request;
                 DatagramSocket sock = new DatagramSocket(); // UDP socket for sending
                 byte[] codedRequest = new byte[1024];
@@ -94,7 +89,7 @@ public static void main(String args[]) throws Exception {
 
                 byte[] buffer = message.getData();
 
-                //TODO ADJUST HEX OUTPUT
+                //HEX VALUE INCORRECT
                 for (byte b : buffer) {
                         System.out.format("\t0x%x\n", b);
                 }
