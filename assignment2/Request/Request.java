@@ -22,7 +22,7 @@ public class Request {
 
    }
 
-   public double calculate(int op1, int opCode, int op2) {
+   public int calculate(int op1, int opCode, int op2) {
 
       switch (opCode) {
       //TODO determine calculation errors

@@ -16,7 +16,6 @@ public class ServerUDP {
       DatagramSocket sock = new DatagramSocket(gPort); // UDP socket for receiving
       DatagramPacket packet = new DatagramPacket(new byte[1024],1024);
       Scanner scan = new Scanner(System.in);
-      String exit = "";
       System.out.println("Server Is Active. Enter \"Control + C\" to Terminate.\n");
       for (;;) {
 
@@ -43,11 +42,11 @@ public class ServerUDP {
 
 
 
-        if (packet.getLength() != receivedRequest.TML) {
+         if (packet.getLength() != receivedRequest.TML) {
 
-          receivedRequest.TML = 127;
+            receivedRequest.error = 127;
 
-        }
+         }
          byte[] sendRequest = encoder.encode(receivedRequest);
          packet.setData(sendRequest);
          sock.send(packet);
