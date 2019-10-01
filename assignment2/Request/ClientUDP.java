@@ -94,10 +94,21 @@ public class ClientUDP {
       
          byte[] buffer = message.getData();
       
-                //HEX VALUE INCORRECT
-         for (byte b : buffer) {
-            System.out.format("\t0x%x\n", b);
-         }
+                
+                
+         for (int i = 0; i < buffer.length; i++) {
+          
+            if (i % 4 == 3) {
+            
+               System.out.format("\t0x%x\n", buffer[i]);
+             
+            }
+          
+         }       
+                
+         //for (byte b : buffer) {
+            //System.out.format("\t0x%x\n", b);
+         //}
       
       }
         //sock.close();
