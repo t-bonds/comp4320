@@ -20,9 +20,9 @@ public class RequestEncoderBin implements RequestEncoder, RequestBinConst {
       out.writeInt(request.ID);
       out.writeInt(request.opCode);
       out.writeInt(request.operands);
-      out.writeDouble(request.op1);
-      out.writeDouble(request.op2);
-      out.writeDouble(request.result);
+      out.writeInt(request.op1);
+      out.writeInt(request.op2);
+      out.writeInt(request.result);
       out.flush();
       return buf.toByteArray();
    }

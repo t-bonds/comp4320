@@ -4,15 +4,15 @@ public class Request {
    public int ID;                 // Request ID
    public int opCode;             // Operand Code, Desired Operation
    public int operands;           // Number of Operands
-   public double op1;             // Operand 1
-   public double op2;             // Operand 2
+   public int op1;             // Operand 1
+   public int op2;             // Operand 2
    public int error = 0;              // Error Code BYTE?
-   public double result;          // Result Of Calculations
+   public int result;          // Result Of Calculations
 
 
 
    public Request(int TML, int ID, int opCode,
-              int operands, double op1, double op2)  {
+              int operands, int op1, int op2)  {
       this.TML           = TML;
       this.ID            = ID;
       this.opCode        = opCode;
@@ -22,7 +22,7 @@ public class Request {
 
    }
 
-   public double calculate(double op1, int opCode, double op2) {
+   public double calculate(int op1, int opCode, int op2) {
 
       switch (opCode) {
       //TODO determine calculation errors
@@ -39,13 +39,13 @@ public class Request {
             result = op1 / op2;
             break;
          case 4:
-            result = ((int) op1 >> (int) op2);
+            result =  op1 >> op2;
             break;
          case 5:
-            result = ((int) op1 << (int) op2);
+            result = op1 <<  op2;
             break;
          case 6:
-            result = ~((int) op1);
+            result = ~op1;
             break;
          default:
             error = 1;
