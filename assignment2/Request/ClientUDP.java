@@ -87,25 +87,28 @@ public class ClientUDP {
       
       
          Request receivedRequest = decoder.decode(message);
-      
-         System.out.println("\n" + receivedRequest);
-         System.out.println("Time Elapsed: " + elapsed/(1000000.0) + "ms");
+         
          System.out.println("\nHex Bytes:");
       
          byte[] buffer = message.getData();
+         
       
                 
                 
-         for (int i = 0; i < buffer.length; i++) {
+         for (int i = 0; i < buffer.length - 4; i++) {
           
-            if (i % 4 == 3) {
             
-               System.out.format("\t0x%x\n", buffer[i]);
+            
+            System.out.format("\t0x%x\n", buffer[i]);
              
-            }
+            
           
          }       
-                
+      
+      
+         System.out.println("\n" + receivedRequest);
+         System.out.println("Time Elapsed: " + elapsed/(1000000.0) + "ms");
+                            
          //for (byte b : buffer) {
             //System.out.format("\t0x%x\n", b);
          //}
