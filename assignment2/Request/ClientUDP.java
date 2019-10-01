@@ -41,7 +41,7 @@ public static void main(String args[]) throws Exception {
                         System.out.print("\n\tOperand 2: ");
                         op2 = Integer.parseInt(scan.nextLine());
                         operands = 2;
-                        
+
                 }
 
                 Request request;
@@ -73,9 +73,12 @@ public static void main(String args[]) throws Exception {
                 DatagramPacket message = new DatagramPacket(codedRequest, codedRequest.length,
                                                             destAddr, destPort);
                 sock.send(message);
+                long start = System.nanoTime();
                 ID++;
 
                 sock.receive(message);
+                long finish = System.nanoTime();
+                long elapsed = finish - start;
 
                 RequestDecoder decoder = (args.length == 2 ? // Which encoding
                                           new RequestDecoderBin(args[1]) :
@@ -85,6 +88,7 @@ public static void main(String args[]) throws Exception {
                 Request receivedRequest = decoder.decode(message);
 
                 System.out.println("\n" + receivedRequest);
+                System.out.println("Time Elapsed: " + elapsed/(1000000.0) + "ms");
                 System.out.println("\nHex Bytes:");
 
                 byte[] buffer = message.getData();
