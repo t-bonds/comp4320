@@ -5,84 +5,92 @@ import java.util.Random; // for random ID variable
 
 public class ClientUDP {
 
-   public static void main(String args[]) throws Exception {
+public static void main(String args[]) throws Exception {
 
-      if (args.length != 2 && args.length != 3) // Test for correct # of args
-         throw new IllegalArgumentException("Parameter(s): <Destination>" +
+        if (args.length != 2 && args.length != 3) // Test for correct # of args
+                throw new IllegalArgumentException("Parameter(s): <Destination>" +
                                                    " <Port> [<encoding]");
 
 
-      InetAddress destAddr = InetAddress.getByName(args[0]); // Destination address
-      int destPort = Integer.parseInt(args[1]) + RequestBinConst.GROUP_NUMBER;             // Destination port
+        InetAddress destAddr = InetAddress.getByName(args[0]); // Destination address
+        int destPort = Integer.parseInt(args[1]) + RequestBinConst.GROUP_NUMBER;           // Destination port
 
-      Random rand = new Random();
-      int TML = 0;
-      int opCode, op1;
-      int ID = 1;
-      int operands = 1;
-      int op2 = 0;
-      for (;;) {
-         Scanner scan = new Scanner(System.in);
-         System.out.println("Please Enter The Following Values:");
-         System.out.print("\tOperand Type - \n\t\"0\" = +, \n\t\"1\" = -, \n\t\"2\" = *, \n\t\"3\" = /, \n\t\"4\" = >>, \n\t\"5\" = <<, \n\t\"6\" = ~, \n\t\"exit\" = Terminate \n\tEnter Selection: ");
+        Random rand = new Random();
+        int TML = 0;
+        int opCode, op1;
+        int ID = 1;
+        int operands = 1;
+        int op2 = 0;
+        for (;;) {
+                Scanner scan = new Scanner(System.in);
+                System.out.println("Please Enter The Following Values:");
+                System.out.print("\tOperand Type - \n\t\"0\" = +, \n\t\"1\" = -, \n\t\"2\" = *, \n\t\"3\" = /, \n\t\"4\" = >>, \n\t\"5\" = <<, \n\t\"6\" = ~, \n\t\"exit\" = Terminate \n\tEnter Selection: ");
 
-         String opString = scan.nextLine();
+                String opString = scan.nextLine();
 
-         if (opString.equals("exit")) {
-            break;
-         }
-         opCode = Integer.parseInt(opString);
+                if (opString.equals("exit")) {
+                        break;
+                }
+                opCode = Integer.parseInt(opString);
 
 
-         System.out.print("\n\tOperand 1: ");
-         op1 = Integer.parseInt(scan.nextLine());
+                System.out.print("\n\tOperand 1: ");
+                op1 = Integer.parseInt(scan.nextLine());
                 //TODO REDO TML CALCULATION
-         if (opCode <=5) {
+                if (opCode <=5) {
 
-            System.out.print("\n\tOperand 2: ");
-            op2 = Integer.parseInt(scan.nextLine());
-            operands = 2;
-            TML = String.valueOf(ID).length() + String.valueOf(opCode).length() + String.valueOf(operands).length() + String.valueOf(op1).length() + String.valueOf(op2).length();
-         }
+                        System.out.print("\n\tOperand 2: ");
+                        op2 = Integer.parseInt(scan.nextLine());
+                        operands = 2;
+                        TML = String.valueOf((byte) ID).length() + String.valueOf((byte)opCode).length() + String.valueOf((byte)operands).length() + String.valueOf((byte) op1).length() + String.valueOf((byte) op2).length();
+                }
 
-         else if (opCode == 6) {
+                else if (opCode == 6) {
 
-            TML = String.valueOf(ID).length() + String.valueOf(opCode).length() + String.valueOf(operands).length() + String.valueOf(op1).length();
+                        TML = String.valueOf((byte) ID).length() + String.valueOf((byte) opCode).length() + String.valueOf((byte) operands).length() + String.valueOf((byte) op1).length();
 
-         }
+                }
 
-         TML +=1;
+                TML +=1;
 
-         Request request = new Request(TML, ID, opCode, operands, op1, op2);
+                Request request = new Request(TML, ID, opCode, operands, op1, op2);
 
-         DatagramSocket sock = new DatagramSocket(); // UDP socket for sending
+                DatagramSocket sock = new DatagramSocket(); // UDP socket for sending
 
 
                 // Use the encoding scheme given on the command line (args[2])
-         RequestEncoder encoder = (args.length == 3 ?
+                RequestEncoder encoder = (args.length == 3 ?
                                           new RequestEncoderBin(args[2]) :
                                           new RequestEncoderBin());
 
 
-         byte[] codedRequest = encoder.encode(request); // Encode request
+                byte[] codedRequest = encoder.encode(request); // Encode request
 
-         DatagramPacket message = new DatagramPacket(codedRequest, codedRequest.length,
+                DatagramPacket message = new DatagramPacket(codedRequest, codedRequest.length,
                                                             destAddr, destPort);
-         sock.send(message);
-         ID++;
+                sock.send(message);
+                ID++;
 
-         sock.receive(message);
+                sock.receive(message);
 
-         RequestDecoder decoder = (args.length == 2 ? // Which encoding
-                                   new RequestDecoderBin(args[1]) :
-                                   new RequestDecoderBin() );
+                RequestDecoder decoder = (args.length == 2 ? // Which encoding
+                                          new RequestDecoderBin(args[1]) :
+                                          new RequestDecoderBin() );
 
 
-         Request receivedRequest = decoder.decode(message);
+                Request receivedRequest = decoder.decode(message);
 
-         System.out.println("\n" + receivedRequest);
+                System.out.println("\n" + receivedRequest);
+                System.out.println("\nHex Bytes:");
 
-      }
-      //sock.close();
-   }
+                byte[] buffer = message.getData();
+
+                //TODO ADJUST HEX OUTPUT
+                for (byte b : buffer) {
+                        System.out.format("\t0x%x\n", b);
+                }
+
+        }
+        //sock.close();
+}
 }
