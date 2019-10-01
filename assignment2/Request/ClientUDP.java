@@ -13,10 +13,10 @@ public static void main(String args[]) throws Exception {
 
 
         InetAddress destAddr = InetAddress.getByName(args[0]); // Destination address
-        int destPort = Integer.parseInt(args[1]) + RequestBinConst.GROUP_NUMBER;           // Destination port
+        int destPort = Integer.parseInt(args[1]) + RequestBinConst.GROUP_NUMBER;         // Destination port
 
         Random rand = new Random();
-        int TML = 0;
+        int TML = -1;
         int opCode, op1;
         int ID = 1;
         int operands = 1;
@@ -36,35 +36,44 @@ public static void main(String args[]) throws Exception {
 
                 System.out.print("\n\tOperand 1: ");
                 op1 = Integer.parseInt(scan.nextLine());
-                //TODO REDO TML CALCULATION
                 if (opCode <=5) {
 
                         System.out.print("\n\tOperand 2: ");
                         op2 = Integer.parseInt(scan.nextLine());
                         operands = 2;
-                        TML = String.valueOf((byte) ID).length() + String.valueOf((byte)opCode).length() + String.valueOf((byte)operands).length() + String.valueOf((byte) op1).length() + String.valueOf((byte) op2).length();
+                        //TML = String.valueOf((byte) ID).length() + String.valueOf((byte)opCode).length() + String.valueOf((byte)operands).length() + String.valueOf((byte) op1).length() + String.valueOf((byte) op2).length();
                 }
 
-                else if (opCode == 6) {
-
-                        TML = String.valueOf((byte) ID).length() + String.valueOf((byte) opCode).length() + String.valueOf((byte) operands).length() + String.valueOf((byte) op1).length();
-
-                }
-
-                TML +=1;
-
-                Request request = new Request(TML, ID, opCode, operands, op1, op2);
-
+                // else if (opCode == 6) {
+                //
+                //         //TML = String.valueOf((byte) ID).length() + String.valueOf((byte) opCode).length() + String.valueOf((byte) operands).length() + String.valueOf((byte) op1).length();
+                //
+                // }
+                Request request;
                 DatagramSocket sock = new DatagramSocket(); // UDP socket for sending
+                byte[] codedRequest = new byte[1024];
+                for (int i = 0; i <=1; i++) {
+
+                        request = new Request(TML, ID, opCode, operands, op1, op2);
 
 
-                // Use the encoding scheme given on the command line (args[2])
-                RequestEncoder encoder = (args.length == 3 ?
-                                          new RequestEncoderBin(args[2]) :
-                                          new RequestEncoderBin());
 
 
-                byte[] codedRequest = encoder.encode(request); // Encode request
+                        // Use the encoding scheme given on the command line (args[2])
+                        RequestEncoder encoder = (args.length == 3 ?
+                                                  new RequestEncoderBin(args[2]) :
+                                                  new RequestEncoderBin());
+
+
+                        codedRequest = encoder.encode(request); // Encode request
+
+                        if (TML == -1) {
+
+                                TML = codedRequest.length + 1;
+                                continue;
+
+                        }
+                }
 
                 DatagramPacket message = new DatagramPacket(codedRequest, codedRequest.length,
                                                             destAddr, destPort);
