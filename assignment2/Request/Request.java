@@ -54,7 +54,6 @@ public class Request {
       return result;
    }
 
-
    public String toString() {
       final String EOLN = java.lang.System.getProperty("line.separator");
       String value = "Total Message Length: " + TML + EOLN +
