@@ -12,46 +12,49 @@ public static void main(String args[]) throws Exception {
 
 
         InetAddress destAddr = InetAddress.getByName(args[0]); // Destination address
-        int destPort = Integer.parseInt(args[1]) + RequestBinConst.GID; // Destination port
+        int destPort = Integer.parseInt(args[1]) + RequestBinConst.GROUP_NUMBER; // Destination port
 
         for(;;) {
                 Byte TML = 6;
-                Byte requestID = 1;
-                Byte numberOperands = 1;
+                Byte ID = 1;
+                Byte operands = 1;
                 Byte opCode;
-                Short operand1 = 0;
-                Short operand2 = 0;
+                Short op1 = 0;
+                Short op2 = 0;
 
                 Scanner scan = new Scanner(System.in);
-                System.out.println("List of Op Codes: ");
-                System.out.println("\tOperation: \"+\"\tOpcode: 0" +
-                                   "\n\tOperation: \"-\"\tOpcode: 1" +
-                                   "\n\tOperation: \"*\"\tOpcode: 2" +
-                                   "\n\tOperation: \"/\"\tOpcode: 3" +
-                                   "\n\tOperation: \">>\"\tOpcode: 4" +
-                                   "\n\tOperation: \"<<\"\tOpcode: 5" +
-                                   "\n\tOperation: \"~\"\tOpcode: 6");
+                System.out.println("Please Enter The Following Values:");
+                System.out.print("\tOperand Type - \n\t\"0\" = +, \n\t\"1\" = -, \n\t\"2\" = *, \n\t\"3\" = /, \n\t\"4\" = >>, \n\t\"5\" = <<, \n\t\"6\" = ~, \n\t\"exit\" = Terminate \n\tEnter Selection: ");
 
-                do {
-                        System.out.print("Enter the Op Code of the operation you wish to perform: ");
-                        int opCode_INT = Integer.parseInt(scan.nextLine());
-                        opCode = (byte) opCode_INT;
-                } while (opCode > 6);
+                String opString = scan.nextLine();
 
-                System.out.print("Enter the first operand: ");
-                int operand1_INT = Integer.parseInt(scan.nextLine());
-                operand1 = (short) operand1_INT;
+                if (opString.equals("exit")) {
+                        break;
+                }
+                int opCodeInt = Integer.parseInt(opString);
+                opCode = (byte) opCodeInt;
 
 
-                if (opCode < 6) {
+                // do {
+                //         System.out.print("Enter the Op Code of the operation you wish to perform: ");
+                //         int opCode_INT = Integer.parseInt(scan.nextLine());
+                //         opCode = (byte) opCode_INT;
+                // } while (opCode > 6);
+
+                System.out.print("\n\tOperand 1: ");
+                int op1Int = Integer.parseInt(scan.nextLine());
+                op1 = (short) op1Int;
+
+
+                if (opCode <= 5) {
+                        System.out.print("\n\tOperand 2: ");
+                        int op2Int = Integer.parseInt(scan.nextLine());
+                        op2 = (short) op2Int;
                         TML = (byte) 8;
-                        numberOperands = (byte) 2;
-                        System.out.print("Enter the second operand: ");
-                        int operand2_INT = Integer.parseInt(scan.nextLine());
-                        operand2 = (short) operand2_INT;
+                        operands = (byte) 2;
                 }
 
-                Request Request = new Request(TML, requestID, opCode, numberOperands, operand1, operand2);
+                Request Request = new Request(TML, ID, opCode, operands, op1, op2);
 
                 DatagramSocket sock = new DatagramSocket(); // UDP socket for sending
 
@@ -68,19 +71,18 @@ public static void main(String args[]) throws Exception {
 
                 // D E B U G G I N G   S T U F F
                 System.out.println("Message length: " + message.getLength());
-                System.out.print("\nD E B U G\nMessage bytes: ");
-                byte[] byteBufferDebug = message.getData();
+                System.out.print("\nHex String: ");
+                byte[] sendBuffer = message.getData();
                 for (int i = 0; i < Request.TML; i++) {
-                        System.out.format(" 0x%x", byteBufferDebug[i]);
+                        System.out.format(" 0x%x", sendBuffer[i]);
                 }
-                System.out.println("\nD E B U G\n");
-                // D E B U G G I N G   S T U F F
 
                 sock.send(message);
-                long timeAtSend = System.nanoTime();
+                long start = System.nanoTime();
 
                 sock.receive(message);
-                long timeElapsed = System.nanoTime() - timeAtSend;
+                long finish = System.nanoTime();
+                long elapsed = finish - start;
 
                 RequestDecoder decoder = (args.length == 2 ? // Which encoding
                                           new RequestDecoderBin(args[1]) :
@@ -88,15 +90,15 @@ public static void main(String args[]) throws Exception {
 
                 Response Response = decoder.decodeResponse(message);
 
-                //print stuff
-                System.out.print("Message bytes: ");
-                byte[] byteBuffer = message.getData();
+
+                System.out.print("Hex String: ");
+                byte[] receiveBuffer = message.getData();
                 for (int i = 0; i < Response.TML; i++) {
-                        System.out.format(" 0x%x", byteBuffer[i]);
+                        System.out.format(" 0x%x", receiveBuffer[i]);
                 }
 
                 System.out.println("\n" + Response);
-                System.out.println("Time Elapsed: " + timeElapsed / 1000000.0 + "ms\n");
+                System.out.println("Time Elapsed: " + elapsed / 1000000.0 + "ms\n");
         }
 
 
