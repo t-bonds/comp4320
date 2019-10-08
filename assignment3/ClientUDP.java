@@ -12,7 +12,7 @@ public static void main(String args[]) throws Exception {
 
 
         InetAddress destAddr = InetAddress.getByName(args[0]); // Destination address
-        int destPort = Integer.parseInt(args[1]) + RequestBinConst.GROUP_NUMBER; // Destination port
+        int destPort = Integer.parseInt(args[1]) + TCPRequestBinConst.GROUP_NUMBER; // Destination port
 
         for(;;) {
                 Byte TML = 6;
@@ -54,26 +54,26 @@ public static void main(String args[]) throws Exception {
                         operands = (byte) 2;
                 }
 
-                Request Request = new Request(TML, ID, opCode, operands, op1, op2);
+                TCPRequest TCPRequest = new TCPRequest(TML, ID, opCode, operands, op1, op2);
 
                 DatagramSocket sock = new DatagramSocket(); // UDP socket for sending
 
 
                 // Use the encoding scheme given on the command line (args[2])
-                RequestEncoder encoder = (args.length == 3 ?
-                                          new RequestEncoderBin(args[2]) :
-                                          new RequestEncoderBin());
+                TCPRequestEncoder encoder = (args.length == 3 ?
+                                          new TCPRequestEncoderBin(args[2]) :
+                                          new TCPRequestEncoderBin());
 
-                byte[] codedRequest = encoder.encode(Request); // Encode Request
+                byte[] codedTCPRequest = encoder.encode(TCPRequest); // Encode TCPRequest
 
-                DatagramPacket message = new DatagramPacket(codedRequest, codedRequest.length,
+                DatagramPacket message = new DatagramPacket(codedTCPRequest, codedTCPRequest.length,
                                                             destAddr, destPort);
 
                 // D E B U G G I N G   S T U F F
                 System.out.println("Message length: " + message.getLength());
                 System.out.print("\nHex String: ");
                 byte[] sendBuffer = message.getData();
-                for (int i = 0; i < Request.TML; i++) {
+                for (int i = 0; i < TCPRequest.TML; i++) {
                         System.out.format(" 0x%x", sendBuffer[i]);
                 }
 
@@ -84,9 +84,9 @@ public static void main(String args[]) throws Exception {
                 long finish = System.nanoTime();
                 long elapsed = finish - start;
 
-                RequestDecoder decoder = (args.length == 2 ? // Which encoding
-                                          new RequestDecoderBin(args[1]) :
-                                          new RequestDecoderBin() );
+                TCPRequestDecoder decoder = (args.length == 2 ? // Which encoding
+                                          new TCPRequestDecoderBin(args[1]) :
+                                          new TCPRequestDecoderBin() );
 
                 Response Response = decoder.decodeResponse(message);
 

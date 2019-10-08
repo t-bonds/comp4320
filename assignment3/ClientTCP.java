@@ -13,16 +13,16 @@ public static void main(String args[]) throws Exception {
 
         Socket sock = new Socket(destAddr, destPort);
 
-        Request request = new Request(1234567890987654L, "John Smith",
+        TCPRequest request = new TCPRequest(1234567890987654L, "John Smith",
                                    (short) 2360, 36830, false, true, false);
 
         System.out.println("Display request");
         System.out.println(request); // Display request just to check what we send
 
 
-        RequestEncoder encoder = new RequestEncoderBin();
+        TCPRequestEncoder encoder = new TCPRequestEncoderBin();
 
-        System.out.println("Sending Request (Binary)");
+        System.out.println("Sending TCPRequest (Binary)");
         OutputStream out = sock.getOutputStream(); // Get a handle onto Output Stream
         out.write(encoder.encode(request)); // Encode and send
 

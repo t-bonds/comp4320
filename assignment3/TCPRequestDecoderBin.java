@@ -1,19 +1,19 @@
 import java.io.*;  // for ByteArrayInputStream
 import java.net.*; // for DatagramPacket
 
-public class RequestDecoderBin implements RequestDecoder, RequestBinConst {
+public class TCPRequestDecoderBin implements TCPRequestDecoder, TCPRequestBinConst {
 
 private String encoding;    // Character encoding
 
-public RequestDecoderBin() {
+public TCPRequestDecoderBin() {
         encoding = DEFAULT_ENCODING;
 }
 
-public RequestDecoderBin(String encoding) {
+public TCPRequestDecoderBin(String encoding) {
         this.encoding = encoding;
 }
 
-public Request decodeRequest(InputStream wire) throws IOException {
+public TCPRequest decodeTCPRequest(InputStream wire) throws IOException {
         DataInputStream src = new DataInputStream(wire);
 
         Byte TML             = src.readByte();
@@ -23,7 +23,7 @@ public Request decodeRequest(InputStream wire) throws IOException {
         Short op1            = src.readShort();
         Short op2            = src.readShort();
 
-        return new Request(TML, ID, opCode, operands, op1, op2);
+        return new TCPRequest(TML, ID, opCode, operands, op1, op2);
 }
 
 public Response decodeResponse(InputStream wire) throws IOException {
@@ -37,10 +37,10 @@ public Response decodeResponse(InputStream wire) throws IOException {
         return new Response(TML, ID, error, result);
 }
 
-public Request decodeRequest(DatagramPacket p) throws IOException {
+public TCPRequest decodeTCPRequest(DatagramPacket p) throws IOException {
         ByteArrayInputStream payload =
                 new ByteArrayInputStream(p.getData(), p.getOffset(), p.getLength());
-        return decodeRequest(payload);
+        return decodeTCPRequest(payload);
 }
 
 public Response decodeResponse(DatagramPacket p) throws IOException {

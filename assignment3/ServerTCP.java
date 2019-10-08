@@ -14,11 +14,11 @@ public static void main(String args[]) throws Exception {
         Socket clntSock = servSock.accept();
 
         // Receive binary-encoded friend
-        RequestDecoder decoder = new RequestDecoderBin();
-        Request receivedRequest = decoder.decode(clntSock.getInputStream());
+        TCPRequestDecoder decoder = new TCPRequestDecoderBin();
+        TCPRequest receivedTCPRequest = decoder.decode(clntSock.getInputStream());
 
-        System.out.println("Received Binary-Encoded Request");
-        System.out.println(receivedRequest);
+        System.out.println("Received Binary-Encoded TCPRequest");
+        System.out.println(receivedTCPRequest);
 
         clntSock.close();
         servSock.close();

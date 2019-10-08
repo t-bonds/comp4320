@@ -8,7 +8,7 @@ public static void main(String[] args) throws Exception {
         if (args.length != 1 && args.length != 2) // Test for correct # of args
                 throw new IllegalArgumentException("Parameter(s): <Port> [<encoding>]");
 
-        int port = Integer.parseInt(args[0]) + RequestBinConst.GROUP_NUMBER; // Receiving Port
+        int port = Integer.parseInt(args[0]) + TCPRequestBinConst.GROUP_NUMBER; // Receiving Port
 
         DatagramSocket sock = new DatagramSocket(port); // UDP socket for receiving
         DatagramPacket packet = new DatagramPacket(new byte[1024],1024);
@@ -30,40 +30,40 @@ public static void main(String[] args) throws Exception {
 
 
                 // Receive binary-encoded request
-                // RequestDecoder decoder = new RequestDecoderBin();
-                RequestDecoder decoder = (args.length == 2 ? // Which encoding
-                                          new RequestDecoderBin(args[1]) :
-                                          new RequestDecoderBin() );
+                // TCPRequestDecoder decoder = new TCPRequestDecoderBin();
+                TCPRequestDecoder decoder = (args.length == 2 ? // Which encoding
+                                          new TCPRequestDecoderBin(args[1]) :
+                                          new TCPRequestDecoderBin() );
 
-                Request Request = decoder.decodeRequest(packet);
+                TCPRequest TCPRequest = decoder.decodeTCPRequest(packet);
 
 
                 // Print receive confirmation
-                System.out.println("Received Binary-Encoded Request");
+                System.out.println("Received Binary-Encoded TCPRequest");
 
                 System.out.print("\nMessage bytes: ");
                 byte[] sendBuffer = packet.getData();
-                for (int i = 0; i < Request.TML; i++) {
+                for (int i = 0; i < TCPRequest.TML; i++) {
                         System.out.format(" 0x%x", sendBuffer[i]);
                 }
 
                 System.out.println();
-                System.out.println(Request);
+                System.out.println(TCPRequest);
 
                 byte errorCode = 0;
-                if (packet.getLength() != Request.TML) {
+                if (packet.getLength() != TCPRequest.TML) {
                         errorCode = (byte) 127;
                 }
 
-                int result = calculate(Request.opCode, Request.op1, Request.op2);
+                int result = calculate(TCPRequest.opCode, TCPRequest.op1, TCPRequest.op2);
 
-                Response Response = new Response(Request.TML, Request.ID, error, result);
+                Response Response = new Response(TCPRequest.TML, TCPRequest.ID, error, result);
 
-                RequestEncoder encoder = (args.length == 3 ?
-                                          new RequestEncoderBin(args[2]) :
-                                          new RequestEncoderBin());
+                TCPRequestEncoder encoder = (args.length == 3 ?
+                                          new TCPRequestEncoderBin(args[2]) :
+                                          new TCPRequestEncoderBin());
 
-                byte[] sendResponse = encoder.encode(Response); // Encode Request
+                byte[] sendResponse = encoder.encode(Response); // Encode TCPRequest
                 packet.setData(sendResponse);
                 packet.setLength(sendResponse.length);
                 sock.send(packet);
