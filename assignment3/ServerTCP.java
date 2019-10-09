@@ -10,38 +10,36 @@ public class ServerTCP {
 
       int port = Integer.parseInt(args[0]) + TCPRequestBinConst.GROUP_NUMBER;   // Receiving Port
 
-      DatagramSocket sock = new DatagramSocket(port);  // UDP socket for receiving
-      DatagramPacket packet = new DatagramPacket(new byte[1024],1024);
+      ServerSocket servSock = new ServerSocket(port);  // TCP socket for receiving
+      Socket clntSock = servSock.accept();
 
       System.out.println("Server Is Active. Enter \"Control + C\" to Terminate.\n");
 
       for (;;) {
          System.out.println("Server is Idle. Awaiting Packets.\n");
 
-         sock.receive(packet);
-
-
-         System.out.println("Message length: " + packet.getLength());
-         System.out.print("\nHex String: ");
-         byte[] receiveBuffer = packet.getData();
-         for (int i = 0; i < 8; i++) {
-            System.out.format("\t0x%x\n", receiveBuffer[i]);
-         }
-
-
-
          TCPRequestDecoder decoder = (args.length == 2 ?   // Which encoding
             new TCPRequestDecoderBin(args[1]) :
             new TCPRequestDecoderBin() );
 
-         TCPRequest Request = decoder.decodeRequest(packet);
+            InputStream in = clntSock.getInputStream();
+            OutputStream out = clntSock.getOutputStream();
 
+         TCPRequest Request = decoder.decodeRequest(in);
+
+
+         System.out.println("Message length: " + Request.TML);
+         System.out.print("\nHex String: ");
+         byte[] receiveBuffer = toByteArray(in);
+         for (int i = 0; i < 8; i++) {
+            System.out.format("\t0x%x\n", receiveBuffer[i]);
+         }
 
       // Print receive confirmation
          System.out.println("Received Binary-Encoded Request");
 
          System.out.print("\nHex String: ");
-         byte[] byteBuffer = packet.getData();
+         byte[] byteBuffer = toByteArray(in);
          for (int i = 0; i < Request.TML; i++) {
             System.out.format("\t0x%x\n", byteBuffer[i]);
          }
@@ -50,7 +48,7 @@ public class ServerTCP {
          System.out.println(Request);
 
          byte error = 0;
-         if (packet.getLength() != Request.TML) {
+         if (byteBuffer.length != Request.TML) {
             error = (byte) 127;
          }
 
@@ -63,9 +61,7 @@ public class ServerTCP {
             new TCPRequestEncoderBin());
 
          byte[] codedResponse = encoder.encode(Response); // Encode Request
-         packet.setData(codedResponse);
-         packet.setLength(codedResponse.length);
-         sock.send(packet);
+         out.write(codedResponse);
       }
     /* NOT REACHED */
    }
@@ -103,4 +99,21 @@ public class ServerTCP {
       }
       return result;
    }
+
+   public static byte[] toByteArray(InputStream in) throws IOException {
+
+   		ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+   		byte[] buffer = new byte[1024];
+   		int len;
+
+   		// read bytes from the input stream and store them in buffer
+   		while ((len = in.read(buffer)) != -1) {
+   			// write bytes from the buffer into output stream
+   			os.write(buffer, 0, len);
+   		}
+
+   		return os.toByteArray();
+   	}
+
 }
