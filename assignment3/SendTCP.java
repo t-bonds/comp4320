@@ -1,7 +1,7 @@
 import java.io.*;   // for Input/OutputStream
 import java.net.*;  // for Socket
 
-public class ClientTCP {
+public class SendTCP {
 
 public static void main(String args[]) throws Exception {
 
@@ -13,18 +13,18 @@ public static void main(String args[]) throws Exception {
 
         Socket sock = new Socket(destAddr, destPort);
 
-        TCPRequest request = new TCPRequest(1234567890987654L, "John Smith",
+        Friend friend = new Friend(1234567890987654L, "John Smith",
                                    (short) 2360, 36830, false, true, false);
 
-        System.out.println("Display request");
-        System.out.println(request); // Display request just to check what we send
+        System.out.println("Display friend");
+        System.out.println(friend); // Display friend just to check what we send
 
 
-        TCPRequestEncoder encoder = new TCPRequestEncoderBin();
+        FriendEncoder encoder = new FriendEncoderBin();
 
-        System.out.println("Sending TCPRequest (Binary)");
+        System.out.println("Sending Friend (Binary)");
         OutputStream out = sock.getOutputStream(); // Get a handle onto Output Stream
-        out.write(encoder.encode(request)); // Encode and send
+        out.write(encoder.encode(friend)); // Encode and send
 
         sock.close();
 

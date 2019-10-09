@@ -1,24 +1,24 @@
-public class Response {
+public class TCPResponse {
 
-public Byte TML;                 // Total Message Length
-public Byte ID;                  // Request ID
-public Byte error;               // Error Code
-public int result;               // Calculated Answer
+   public Byte TML;             // Total Message Length
+   public Byte ID;            // Request ID
+   public Byte error;       // Error Code
+   public int result;          // Result of Calculation
 
 
-public Response(Byte TML, Byte ID, Byte error, int result)  {
-        this.TML = TML;
-        this.ID = ID;
-        this.error = error;
-        this.result = result;
-}
+   public TCPResponse(Byte TML, Byte ID, Byte error, int result)  {
+      this.TML = TML;
+      this.ID = ID;
+      this.error = error;
+      this.result = result;
+   }
 
-public String toString() {
-        final String EOLN = java.lang.System.getProperty("line.separator");
-        String value = "TML:" + TML + EOLN +
-                       "Request ID: " + ID + EOLN +
-                       "Error Code: " + error + EOLN +
-                       "Result: " + result + EOLN;
-        return value;
-}
+   public String toString() {
+      final String EOLN = java.lang.System.getProperty("line.separator");
+      String value = "TML: " + TML + EOLN +
+                   "Request ID: " + ID + EOLN +
+                   "Error Code: " + error + EOLN +
+                   "result: " + result + EOLN;
+      return value;
+   }
 }

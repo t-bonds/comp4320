@@ -1,7 +1,7 @@
 import java.io.*;   // for Input/OutputStream
 import java.net.*;  // for Socket and ServerSocket
 
-public class ServerTCP {
+public class RecvTCP {
 
 public static void main(String args[]) throws Exception {
 
@@ -14,11 +14,11 @@ public static void main(String args[]) throws Exception {
         Socket clntSock = servSock.accept();
 
         // Receive binary-encoded friend
-        TCPRequestDecoder decoder = new TCPRequestDecoderBin();
-        TCPRequest receivedTCPRequest = decoder.decode(clntSock.getInputStream());
+        FriendDecoder decoder = new FriendDecoderBin();
+        Friend receivedFriend = decoder.decode(clntSock.getInputStream());
 
-        System.out.println("Received Binary-Encoded TCPRequest");
-        System.out.println(receivedTCPRequest);
+        System.out.println("Received Binary-Encoded Friend");
+        System.out.println(receivedFriend);
 
         clntSock.close();
         servSock.close();
