@@ -26,7 +26,10 @@ public class ServerTCP {
          InputStream in = clntSock.getInputStream();
          OutputStream out = clntSock.getOutputStream();
       
+                  
          TCPRequest Request = decoder.decodeRequest(in);
+      
+      
       
       
          // System.out.println("Message length: " + Request.TML);
@@ -39,7 +42,7 @@ public class ServerTCP {
       // Print receive confirmation
          System.out.println("Received Binary-Encoded Request");
          System.out.println("Message length: " + Request.TML);
-         System.out.print("\nHex String: ");
+         System.out.print("\nHex String: \n");
          byte[] byteBuffer = toByteArray(Request);
          for (int i = 0; i < Request.TML; i++) {
             System.out.format("\t0x%x\n", byteBuffer[i]);
@@ -49,7 +52,7 @@ public class ServerTCP {
          System.out.println(Request);
       
          byte error = 0;
-         if (byteBuffer.length != Request.TML) {
+         if (byteBuffer.length != 8) {
             error = (byte) 127;
          }
       
@@ -103,14 +106,23 @@ public class ServerTCP {
 
    public static byte[] toByteArray(TCPRequest Request) throws IOException {
    
+   
+   
       ByteArrayOutputStream os = new ByteArrayOutputStream();
+      DataOutputStream out = new DataOutputStream(os);
        
-      os.write(Request.TML);
-      os.write(Request.ID);
-      os.write(Request.opCode);
-      os.write(Request.operands);
-      os.write(Request.op1);
-      os.write(Request.op2);
+      out.writeByte(Request.TML);
+      out.writeByte(Request.ID);
+      out.writeByte(Request.opCode);
+      out.writeByte(Request.operands);
+      out.writeShort(Request.op1);
+      out.writeShort(Request.op2);
+   
+   
+   
+      out.flush();
+   
+   
         
       return os.toByteArray();
    }

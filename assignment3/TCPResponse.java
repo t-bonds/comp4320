@@ -18,7 +18,7 @@ public class TCPResponse {
       String value = "TML: " + TML + EOLN +
                    "Request ID: " + ID + EOLN +
                    "Error Code: " + error + EOLN +
-                   "result: " + result + EOLN;
+                   "Result: " + result + EOLN;
       return value;
    }
 }

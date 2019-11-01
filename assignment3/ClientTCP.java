@@ -14,14 +14,15 @@ public class ClientTCP {
    
       InetAddress destAddr = InetAddress.getByName(args[0]); // Destination address
       int destPort = Integer.parseInt(args[1]) + TCPRequestBinConst.GROUP_NUMBER; // Destination port
+      Byte TML = 6;
+      Byte ID = 1;
+      Byte operands = 1;
+      Byte opCode;
+      Short op1 = 0;
+      Short op2 = 0;
    
       for(;;) {
-         Byte TML = 6;
-         Byte ID = 1;
-         Byte operands = 1;
-         Byte opCode;
-         Short op1 = 0;
-         Short op2 = 0;
+         
       
          Scanner scan = new Scanner(System.in);
          System.out.println("Please Enter The Following Values:");
@@ -63,8 +64,8 @@ public class ClientTCP {
          byte[] codedRequest = encoder.encode(Request); // Encode Request
       
       
-         System.out.println("Message length: " + codedRequest.length);
-         System.out.print("Hex String: ");
+         System.out.println("\nMessage length: " + codedRequest.length);
+         System.out.print("Request Hex String: \n");
          //byte[] requestBuffer = message.getData();
          for (int i = 0; i < Request.TML; i++) {
             System.out.format("\t0x%x\n", codedRequest[i]);
@@ -88,14 +89,15 @@ public class ClientTCP {
       
       
                 //TODO FIX!!!
-         System.out.print("Hex String: ");
+         System.out.print("Response Hex String: \n");
          byte[] codedResponse = toByteArray(Response);
-         for (int i = 0; i < Response.TML; i++) {
+         for (int i = 0; i < 7; i++) {
             System.out.format("\t0x%x\n", codedResponse[i]);
          }
       
          System.out.println("\n" + Response);
          System.out.println("Time Elapsed: " + elapsed / 1000000.0 + "ms\n");
+         ID++;
       }
       //sock.close();
    }
@@ -103,11 +105,12 @@ public class ClientTCP {
    public static byte[] toByteArray(TCPResponse Response) throws IOException {
    
       ByteArrayOutputStream os = new ByteArrayOutputStream();
-       
-      os.write(Response.TML);
-      os.write(Response.ID);
-      os.write(Response.error);
-      os.write(Response.result);           
+      DataOutputStream out = new DataOutputStream(os);
+   
+      out.writeByte(Response.TML);
+      out.writeByte(Response.ID);
+      out.writeByte(Response.error);
+      out.writeInt(Response.result);
       return os.toByteArray();
    }
 
