@@ -1,16 +1,12 @@
 import socket
 import sys
 import time
-# from Request.java import *
-# from Response.java import *
-from RequestBinConst.java import *
-# from RequestEncoder.java import *
-# from RequestDecoder.java import *
 
+GROUP_NUMBER = 24
 if len(sys.argv) != 2 and len(sys.argv) != 3:
     raise ValueError('Parameter(s): <Destination>  <Port> [<encoding]')
 
-serverAddress = (sys.argv[1], sys.argv[2] + RequestBinConst.GROUP_NUMBER)
+serverAddress = (sys.argv[1], sys.argv[2] + GROUP_NUMBER)
 
 ID = bytes(1)
 opCode = bytes(1)
@@ -41,7 +37,8 @@ while (True):
     request = Request(TML, ID, opCode, operands, op1, op2)
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    encoder = RequestEncoder(RequestEncoderBin(sys.argv[2]) if len(sys.argv) == 3 else RequestEncoderBin())
+    encoder = RequestEncoderBin(sys.argv[2]) if len(
+        sys.argv) == 3 else RequestEncoderBin()
     codedRequest = bytes(encoder.encode(request))
 
     print('\n\nMessage Length: %d' % len(codedRequest))
@@ -56,7 +53,8 @@ while (True):
     finish = time.time()
     elapsed = start - finish
 
-    decoder = RequestDecoder(RequestDecoderBin(sys.argv(1)) if len(sys.argv) == 3 else RequestDecoderBin())
+    decoder = RequestDecoderBin(sys.argv(1)) if len(
+        sys.argv) == 3 else RequestDecoderBin()
 
     response = decoder.decodeResponse(recv)
     print('\n\nMessage Length: %d' % len(recv))
@@ -68,3 +66,44 @@ while (True):
     final = elapsed / 1000000.0
     print('\n\nTime ELapsed: %dms\n' % final)
     ID = ID + 1
+sock.close()
+
+
+class Request(object):
+
+    def __init__(self, TML, ID, opCode, operands, op1, op2):
+        self.TML = TML
+        self.ID = ID
+        self.opCode = opCode
+        self.operands = operands
+        self.op1 = op1
+        self.op2 = op2
+
+    def toString():
+        value = "TML: %d\nRequestID: %d\nOp Code: %d\nOperands: %d\nOperand 1: %d\nOperand 2: %d\n" % (
+            TML, ID, opCode, operands, op1, op2)
+        return value
+
+
+class RequestEncoderBin():
+    def __init__(self, encoding):
+        super(RequestEncoderBin, self).__init__()
+        encoding = "ISO-8859-1"
+
+    def encode(Request):
+        buf = bytearray()
+        out = bytearray()
+        out.writeByte(Request.TML)
+        out.writeByte(Request.ID)
+        out.writeByte(Request.opCode)
+        out.writeShort(Request.op1)
+        out.writeShort(Request.op2)
+
+
+
+
+class RequestDecoderBin(object):
+
+    def __init__(self, arg):
+        super(RequestDecoderBin, self).__init__()
+        self.arg = arg
