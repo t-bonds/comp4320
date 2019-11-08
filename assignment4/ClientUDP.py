@@ -49,7 +49,11 @@ while (True):
     print('\n\nRequest Hex String: \n')
     # buffer = bytearray(codedRequest)
     for i in codedRequest:
+<<<<<<< HEAD
         print('\t0x%s\n' % int(codedRequest[i]))    #TODO LIST INDICES MUST BE INTEGERS, NOT STR
+=======
+        print('\t0x%s\n' % int(codedRequest[i]))
+>>>>>>> 6c196a1f48512476542ec62cd19912e8adff0bc1
     send = sock.sendto(codedRequest, serverAddress)
     start = time.time()
 
