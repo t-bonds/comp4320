@@ -3,7 +3,8 @@ import sys
 import time
 
 GROUP_NUMBER = 24
-DEFAULT_ENCODING = 'ISO-8859-1'
+DEFAULT_ENCODING = 'iso-8859-1'
+MAX_WIRE_LENGTH  = 1024
 
 ipAddress = sys.argv[1]
 port = int(sys.argv[2])
@@ -16,8 +17,8 @@ serverAddress = (ipAddress, gPort)
 
 ID = 1
 opCode = 1
-op1 = 0.0
-op2 = 0.0
+op1 = 0
+op2 = 0
 exitStr = 'exit'
 
 while (True):
@@ -30,10 +31,10 @@ while (True):
         sys.exit(0)
 
     opCode = int(opString)
-    op1 = float(input("\n\tOperand 1: "))
+    op1 = int(input("\n\tOperand 1: "))
 
     if opCode <= 5:
-        op2 = float(input("\n\tOperand 2: "))
+        op2 = int(input("\n\tOperand 2: "))
         TML = 8
         operands = 2
 
@@ -41,30 +42,32 @@ while (True):
         TML, ID, opCode, operands, op1, op2)
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    request = [TML, ID, opCode, operands, op1, op2]
+    request = "%d%d%d%d%d%d" % (TML, ID, opCode, operands, op1, op2)
+    codedRequest = bytearray()
+    codedRequest.extend(request)
 
-    codedRequest = [str(x).encode(DEFAULT_ENCODING) for x in request]
 
-    print('\n\nMessage Length: %d' % len(codedRequest))
+
+    print('\n\nMessage Length: %s' % TML)
     print('\n\nRequest Hex String: \n')
     # buffer = bytearray(codedRequest)
-    for i in codedRequest:
+    for i in range(len(codedRequest)):
         print('\t0x%s\n' % int(codedRequest[i]))    #TODO LIST INDICES MUST BE INTEGERS, NOT STR
     send = sock.sendto(codedRequest, serverAddress)
     start = time.time()
 
-    recv, server = sock.recvfrom()
+    recv, server = sock.recvfrom(MAX_WIRE_LENGTH)
     finish = time.time()
     elapsed = start - finish
 
     response = [str(x).decode(DEFAULT_ENCODING) for x in recv]
-    print('\n\nMessage Length: %d' % len(recv))
+    print('\n\nMessage Length: %d' % len(response))
     print('\n\nResponse Hex String: \n')
     byteBuffer = bytearray(recv)
     for i in recv:
-        print('\t0x%d\n' % byteBuffer[i])
+        print('\t0x%s\n' % byteBuffer[i])
     print('\n%s' % response)
     final = elapsed / 1000000.0
-    print('\n\nTime ELapsed: %dms\n' % final)
+    print('\n\nTime Elapsed: %dms\n' % final)
     ID = ID + 1
 sock.close()
