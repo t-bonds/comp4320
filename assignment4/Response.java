@@ -21,4 +21,24 @@ public String toString() {
                        "Result: " + result + EOLN;
         return value;
 }
+
+public byte[] toByteArray() throws IOException {
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(byteStream);
+
+        out.writeByte(TML);
+        out.writeByte(ID);
+        out.writeByte(error);
+        out.writeInt(result);
+
+        return byteStream.toByteArray();
+}
+
+public void Hex() throws IOException {
+        byte[] buffer = toByteArray();
+        for (int i = 0; i < TML; i++) {
+                System.out.format("\t0x%x\n", buffer[i]);
+        }
+}
+
 }

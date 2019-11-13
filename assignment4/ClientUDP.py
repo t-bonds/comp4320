@@ -42,7 +42,7 @@ while (True):
         TML, ID, opCode, operands, op1, op2)
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    request = "%d%d%d%d%d%d" % (TML, ID, opCode, operands, op1, op2)
+    request = str('x%sx%sx%sx%sx%sx%sx' % (TML, ID, opCode, operands, op1, op2))
     codedRequest = bytearray()
     codedRequest.extend(request)
 
@@ -51,8 +51,10 @@ while (True):
     print('\n\nMessage Length: %s' % TML)
     print('\n\nRequest Hex String: \n')
     # buffer = bytearray(codedRequest)
-    for i in range(len(codedRequest)):
-        print('\t0x%s\n' % int(codedRequest[i]))    #TODO LIST INDICES MUST BE INTEGERS, NOT STR
+    requestString = str( '\t%s \n\t%s \n\t%s \n\t%s \n\t%s \n\t%s' %
+        (hex(TML), hex(ID), hex(opCode), hex(operands),
+        hex(op1), hex(op2)))
+    print(requestString)
     send = sock.sendto(codedRequest, serverAddress)
     start = time.time()
 
@@ -63,9 +65,7 @@ while (True):
     response = [str(x).decode(DEFAULT_ENCODING) for x in recv]
     print('\n\nMessage Length: %d' % len(response))
     print('\n\nResponse Hex String: \n')
-    byteBuffer = bytearray(recv)
-    for i in recv:
-        print('\t0x%s\n' % byteBuffer[i])
+    print(recv)
     print('\n%s' % response)
     final = elapsed / 1000000.0
     print('\n\nTime Elapsed: %dms\n' % final)

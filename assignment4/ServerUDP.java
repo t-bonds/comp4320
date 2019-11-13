@@ -34,11 +34,7 @@ public static void main(String[] args) throws Exception {
                 System.out.println("Received Binary-Encoded Request");
                 System.out.println("\nMessage Length: " + Request.TML);
                 System.out.println("\nRequest Hex String:");
-                byte[] byteBuffer = packet.getData();
-                for (int i = 0; i < packet.getLength(); i++) {
-                        System.out.format("\t0x%x\n", byteBuffer[i]);
-                }
-
+                Request.Hex();
                 System.out.println();
                 System.out.println(Request);
 

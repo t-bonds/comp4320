@@ -14,14 +14,27 @@ public RequestDecoderBin(String encoding) {
 }
 
 public Request decodeRequest(InputStream wire) throws IOException {
-        DataInputStream src = new DataInputStream(wire);
 
-        Byte TML             = src.readByte();
-        Byte ID       = src.readByte();
-        Byte opCode          = src.readByte();
-        Byte operands  = src.readByte();
-        Short op1       = src.readShort();
-        Short op2       = src.readShort();
+        BufferedReader decode = new BufferedReader(new InputStreamReader(wire));
+        String decodedString = decode.readLine();
+        int i = 1;
+        Byte TML = (byte) getItem(decodedString, i++);
+        Byte ID = (byte) getItem(decodedString, i++);
+        Byte opCode = (byte) getItem(decodedString, i++);
+        Byte operands = (byte) getItem(decodedString, i++);
+        Short op1 = (short) getItem(decodedString, i++);
+        Short op2 = (short) getItem(decodedString, i);
+
+
+
+        //DataInputStream src = new DataInputStream(wire);
+
+        // Byte TML             = src.readByte();
+        // Byte ID       = src.readByte();
+        // Byte opCode          = src.readByte();
+        // Byte operands  = src.readByte();
+        // Short op1       = src.readShort();
+        // Short op2       = src.readShort();
 
         return new Request(TML, ID, opCode, operands, op1, op2);
 }

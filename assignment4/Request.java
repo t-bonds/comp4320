@@ -28,4 +28,32 @@ public String toString() {
                        "Operand 2: " + op2 + EOLN;
         return value;
 }
+
+
+
+public byte[] toByteArray() throws IOException {
+  ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+  DataOutputStream out = new DataOutputStream(byteStream);
+
+  out.writeByte(TML);
+  out.writeByte(ID);
+  out.writeByte(opCode);
+  out.writeByte(operands);
+  out.writeShort(op1);
+  out.writeShort(op2);
+  out.flush();
+
+  return byteStream.toByteArray();
+}
+
+public void Hex() throws IOException {
+        byte[] buffer = toByteArray();
+        for (int i = 0; i < TML; i++) {
+                System.out.format("\t0x%x\n", buffer[i]);
+        }
+}
+
+
+
+
 }
