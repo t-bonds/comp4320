@@ -61,4 +61,18 @@ public Response decodeResponse(DatagramPacket p) throws IOException {
                 new ByteArrayInputStream(p.getData(), p.getOffset(), p.getLength());
         return decodeResponse(payload);
 }
+
+
+public static int getItem(String decodedString, int itemNumber){
+  int idx1 = -1;
+  int idx2 = -1;
+
+  for (int i = 0; i < itemNumber; i++){
+    idx1 = decodedString.indexOf('x', ++idx1);
+    idx2 = decodedString.indexOf('x', idx1 + 1);
+  }
+  int item = Integer.parseInt(decodedString.substring(idx1 + 1, idx2));
+  return item;
+}
+
 }

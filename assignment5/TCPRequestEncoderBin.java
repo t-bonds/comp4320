@@ -2,7 +2,7 @@ import java.io.*;  // for ByteArrayOutputStream and DataOutputStream
 
 public class TCPRequestEncoderBin implements TCPRequestEncoder, TCPRequestBinConst {
 
-   private String encoding;  // Character encoding
+   private String encoding;    // Character encoding
 
    public TCPRequestEncoderBin() {
       encoding = DEFAULT_ENCODING;
