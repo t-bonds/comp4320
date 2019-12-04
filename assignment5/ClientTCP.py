@@ -85,16 +85,16 @@ while(True):
    responseStr = ''
 
    for c in response:
-       if c == 'a' or if c == 'b' or if c == 'c' or if c == 'd' or if c == 'e' or if c == 'f' or
-       c == '0' or c == '1' or c == '2' or c == '3' or c == '4' or c == '5' or c == '6' or c == '7' or c == '8' or c == '9'
-       responseStr = responseStr + c
+       if c == 'a' or c == 'b' or c == 'c' or c == 'd' or c == 'e' or c == 'f' or \
+       c == '0' or c == '1' or c == '2' or c == '3' or c == '4' or c == '5' or c == '6' or c == '7' or c == '8' or c == '9':
+           responseStr = responseStr + c
        if c == 't':
            responseStr = responseStr + '9'
-        if c == 'n':
-            responseStr = responseStr + 'a'
+       if c == 'n':
+           responseStr = responseStr + 'a'
 
-    resultHex = int(responseStr[-8:], 16)
-    result = -(resultHex & 0x8000) | (resultHex & 0x7fff)
+   resultHex = int(responseStr[-8:], 16)
+   result = -(resultHex & 0x8000) | (resultHex & 0x7fff)
 
    print("\nResponse Hex Values: ")
    print("%s" % response)
@@ -103,5 +103,4 @@ while(True):
    print("Result: ")
    print("Result: %i" % result)
    ID += 1
-
-sock.close()
+#sock.close()
