@@ -1,0 +1,7 @@
+The server side of our application is built using python. To run the server, type the following command into the command line after downloading all the files to the same directory.
+
+For Tux Machines Running Python 2: python ServerTCP.py 10010
+
+Run the Client as normal.
+
+Was unable to convert Client Response Output from ASCII values to Int Values.
